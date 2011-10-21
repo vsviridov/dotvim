@@ -30,6 +30,10 @@ nnoremap k gk
 imap jj <Esc>
 
 "Autoexit to normal mode
-au CursorHoldI * stopinsert
-au InsertEnter * let updaterestore=&updatetime | set updatetime=15000
-au InsertLeave * let &updatetime=updaterestore
+if has("autocmd")
+	au CursorHoldI * stopinsert
+	au InsertEnter * let updaterestore=&updatetime | set updatetime=15000
+	au InsertLeave * let &updatetime=updaterestore
+endif
+
+set autoread		"automatically reload files
