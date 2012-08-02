@@ -1,10 +1,12 @@
 call pathogen#infect()
 syntax on
 set laststatus=2
-set statusline=%t\ %y\ format:\ %{&ff};\ [%c,%l]\ %{fugitive#statusline()}
+"set statusline=%t\ %y\ format:\ %{&ff};\ [%c,%l]\ %{fugitive#statusline()}
 set number
 set autoindent
 set hidden
+set encoding=utf-8
+"set t_Co=256
 colorscheme default
 if has("autocmd")
 	autocmd bufwritepost .vimrc source $MYVIMRC
@@ -35,5 +37,7 @@ if has("autocmd")
 	au InsertEnter * let updaterestore=&updatetime | set updatetime=15000
 	au InsertLeave * let &updatetime=updaterestore
 endif
+
+let g:Powerline_symbols = 'fancy'
 
 set autoread		"automatically reload files
