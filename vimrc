@@ -7,7 +7,7 @@ set autoindent
 set hidden
 set encoding=utf-8
 "set t_Co=256
-colorscheme default
+colorscheme hybrid
 if has("autocmd")
 	autocmd bufwritepost .vimrc source $MYVIMRC
 endif

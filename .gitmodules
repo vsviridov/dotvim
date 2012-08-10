@@ -16,3 +16,6 @@
 [submodule "bundle/vimerl"]
 	path = bundle/vimerl
 	url = git://github.com/jimenezrick/vimerl.git
+[submodule "bundle/hybrid.vim"]
+	path = bundle/hybrid.vim
+	url = git://github.com/w0ng/vim-hybrid.git
