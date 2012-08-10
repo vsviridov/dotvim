@@ -38,6 +38,9 @@ if has("autocmd")
 	au InsertLeave * let &updatetime=updaterestore
 endif
 
-let g:Powerline_symbols = 'fancy'
+if has("gui_running")
+else
+	let g:Powerline_symbols = 'fancy'
+endif	
 
 set autoread		"automatically reload files
