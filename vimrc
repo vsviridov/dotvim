@@ -1,19 +1,34 @@
 call pathogen#infect()
-syntax on
-set laststatus=2
-set statusline=%t\ %y\ format:\ %{&ff};\ [%c,%l]\ %{fugitive#statusline()}
-set number
-set autoindent
-set hidden
-colorscheme default
-if has("autocmd")
-	autocmd bufwritepost .vimrc source $MYVIMRC
-endif
+syntax on			"enable syntax hightlighting
+
 set nocompatible
 set modelines=0
 set visualbell
+set laststatus=2		"show 2 status lines
+set number			"show line numbers
+set autoindent			"enable autoindent
+set hidden			"enable multiple dirty buffers
+set encoding=utf-8		"set encoding 
+set autoread			"automatically reload files
 
+colorscheme hybrid
+
+if has("autocmd")
+	"Autoexit to normal mode after 15 seconds of inactivity
+	autocmd CursorHoldI * stopinsert
+	autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=15000
+	autocmd InsertLeave * let &updatetime=updaterestore
+	"Automatically reload VIMRC file after saving
+	autocmd bufwritepost .vimrc source $MYVIMRC
+	autocmd bufwritepost _vimrc source $MYVIMRC
+endif
+"Set <leader> before any key remapping
+let mapleader = '\'
+
+"Remove search highlight when <Esc> is pressed
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
+"highlight search results
+set hlsearch
 
 "No more arrow keys
 nnoremap <up> <nop>
@@ -24,16 +39,16 @@ nnoremap <right> <nop>
 "inoremap <down> <nop>
 "inoremap <left> <nop>
 "inoremap <right> <nop>
+
+"move up and down within virtual lines
 nnoremap j gj
 nnoremap k gk
+
 "press jk in quick succession for esc key
-imap jj <Esc>
+imap jk <Esc>
 
-"Autoexit to normal mode
-if has("autocmd")
-	au CursorHoldI * stopinsert
-	au InsertEnter * let updaterestore=&updatetime | set updatetime=15000
-	au InsertLeave * let &updatetime=updaterestore
-endif
-
-set autoread		"automatically reload files
+if has("gui_running")
+	set guifont=Lucida\ Console:h10:cRUSSIAN
+else
+	let g:Powerline_symbols = 'fancy'
+endif	
