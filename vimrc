@@ -52,3 +52,8 @@ if has("gui_running")
 else
 	let g:Powerline_symbols = 'fancy'
 endif	
+
+if exists("g:loaded_syntastic_c_autoload")
+	nmap <leader>c SyntasticCheck
+	nmap <leader>e Errors
+endif

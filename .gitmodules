@@ -22,3 +22,6 @@
 [submodule "bundle/hybrid.vim"]
 	path = bundle/hybrid.vim
 	url = git://github.com/w0ng/vim-hybrid.git
+[submodule "bundle/syntastic.vim"]
+	path = bundle/syntastic.vim
+	url = git://github.com/scrooloose/syntastic.git
