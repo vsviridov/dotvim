@@ -1,3 +1,6 @@
+scriptencoding utf-8
+set encoding=utf-8
+
 call pathogen#infect()
 syntax on			"enable syntax hightlighting
 
@@ -24,11 +27,32 @@ if has("autocmd")
 endif
 "Set <leader> before any key remapping
 let mapleader = '\'
+"open config with \r
+nmap <leader>r :e $myvimrc<cr>
 
 "Remove search highlight when <Esc> is pressed
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 "highlight search results
 set hlsearch
+"highlight current line
+set cursorline
+"show whitespace
+"set list
+set listchars=tab:▸\ ,eol:¬
+"Invisible character colors
+highlight NonText guifg=#4a4a59
+highlight SpecialKey guifg=#4a4a59
+
+"toggle whitespace
+nmap <leader>l :set list!<cr>
+
+"tab settings
+set shiftwidth=4
+set tabstop=4
+set expandtab
+
+"set sane backspace behaviour
+set backspace=2
 
 "No more arrow keys
 nnoremap <up> <nop>
@@ -46,14 +70,20 @@ nnoremap k gk
 
 "press jk in quick succession for esc key
 imap jk <Esc>
+"press space in normal mode to center screen
+nmap <space> zz
 
 if has("gui_running")
-	set guifont=Lucida\ Console:h10:cRUSSIAN
+	set guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
+	"set guifont=Menlo_for_Powerline:h10:cANSI
 else
 	let g:Powerline_symbols = 'fancy'
 endif	
 
 if exists("g:loaded_syntastic_c_autoload")
-	nmap <leader>c SyntasticCheck
-	nmap <leader>e Errors
+	nmap <leader>c :SyntasticCheck<cr>
+	nmap <leader>e :Errors<cr>
 endif
+
+nmap <leader>] :bn<cr>
+nmap <leader>[ :bp<cr>
