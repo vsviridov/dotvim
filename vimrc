@@ -24,6 +24,10 @@ if has("autocmd")
 	"Automatically reload VIMRC file after saving
 	autocmd bufwritepost .vimrc source $MYVIMRC
 	autocmd bufwritepost _vimrc source $MYVIMRC
+
+    "Mappings for diff mode
+    autocmd filterwritepre * if &diff | map <leader>{ :diffget \\2<cr>| endif
+    autocmd filterwritepre * if &diff | map <leader>} :diffget \\3<cr>| endif
 endif
 "Set <leader> before any key remapping
 let mapleader = '\'
@@ -87,3 +91,9 @@ endif
 
 nmap <leader>] :bn<cr>
 nmap <leader>[ :bp<cr>
+
+if(has("win32") || has("win16"))
+    set wildignore+=*/Deploy/*,*/node_modules/*
+else
+
+endif
