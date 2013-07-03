@@ -32,7 +32,8 @@ endif
 "Set <leader> before any key remapping
 let mapleader = '\'
 "open config with \r
-nmap <leader>r :e $myvimrc<cr>
+nmap <leader>r :e $MYVIMRC<cr>
+nmap <leader>T :TagbarToggle<cr>
 
 "Remove search highlight when <Esc> is pressed
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
@@ -81,7 +82,8 @@ if has("gui_running")
 	set guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
 	"set guifont=Menlo_for_Powerline:h10:cANSI
 else
-	let g:Powerline_symbols = 'fancy'
+	"let g:Powerline_symbols = 'fancy'
+    set mouse=a
 endif	
 
 if exists("g:loaded_syntastic_c_autoload")
@@ -95,5 +97,5 @@ nmap <leader>[ :bp<cr>
 if(has("win32") || has("win16"))
     set wildignore+=*/Deploy/*,*/node_modules/*
 else
-
+    set wildignore+=*\Deploy\*,*\node_modules\*
 endif

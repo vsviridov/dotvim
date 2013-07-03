@@ -31,3 +31,15 @@
 [submodule "bundle/zencoding.vim"]
 	path = bundle/zencoding.vim
 	url = git://github.com/mattn/zencoding-vim.git
+[submodule "bundle/tagbar.vim"]
+	path = bundle/tagbar.vim
+	url = git://github.com/majutsushi/tagbar.git
+[submodule "bundle/nginx-syntax.vim"]
+	path = bundle/nginx-syntax.vim
+	url = git://github.com/evanmiller/nginx-vim-syntax.git
+[submodule "bundle/javascript-syntax.vim"]
+	path = bundle/javascript-syntax.vim
+	url = https://github.com/jelera/vim-javascript-syntax.git
+[submodule "bundle/javascript.vim"]
+	path = bundle/javascript.vim
+	url = https://github.com/pangloss/vim-javascript.git
