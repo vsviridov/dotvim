@@ -86,6 +86,9 @@ else
     set mouse=a
 endif	
 
+"Powerline fonts for Airline
+let g:airline_powerline_fonts = 1
+
 if exists("g:loaded_syntastic_c_autoload")
 	nmap <leader>c :SyntasticCheck<cr>
 	nmap <leader>e :Errors<cr>
