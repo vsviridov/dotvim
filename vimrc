@@ -35,6 +35,15 @@ let mapleader = '\'
 "open config with \r
 nmap <leader>r :e $MYVIMRC<cr>
 nmap <leader>T :TagbarToggle<cr>
+nmap <silent><leader>w :up<cr>
+imap <silent><leader>w <Esc>:up<cr>a
+
+"Javascript Function lookup
+function! JsFunctionLookup()
+    let l:Name = expand("<cword>")
+    execute "/function ".l:Name
+endfu
+nmap <leader>f* :call JsFunctionLookup()<cr>zz
 
 "Remove search highlight when <Esc> is pressed
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
@@ -89,6 +98,7 @@ endif
 
 "Powerline fonts for Airline
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
 
 if exists("g:loaded_syntastic_c_autoload")
 	nmap <leader>c :SyntasticCheck<cr>
@@ -99,7 +109,7 @@ nmap <leader>] :bn<cr>
 nmap <leader>[ :bp<cr>
 
 if(has("win32") || has("win16"))
-    set wildignore+=*/Deploy/*,*/node_modules/*
+    set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*
 else
-    set wildignore+=*\Deploy\*,*\node_modules\*
+    set wildignore+=*\Deploy\*,*\node_modules\*,*\build\*
 endif
