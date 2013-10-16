@@ -3,28 +3,30 @@ scriptencoding utf-8
 set encoding=utf-8
 
 call pathogen#infect()
-syntax on			"enable syntax hightlighting
+syntax on               "enable syntax hightlighting
 
 set nocompatible
 set modelines=0
 set visualbell
-set laststatus=2		"show 2 status lines
-set number			"show line numbers
-set autoindent			"enable autoindent
-set hidden			"enable multiple dirty buffers
-set encoding=utf-8		"set encoding 
-set autoread			"automatically reload files
+set laststatus=2        "show 2 status lines
+set number              "show line numbers
+set autoindent          "enable autoindent
+set hidden              "enable multiple dirty buffers
+set encoding=utf-8      "set encoding
+set autoread            "automatically reload files
+set wildmode=full
+set wildmenu            "show autocomplete menu
 
 colorscheme hybrid
 
 if has("autocmd")
-	"Autoexit to normal mode after 15 seconds of inactivity
-	autocmd CursorHoldI * stopinsert
-	autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=15000
-	autocmd InsertLeave * let &updatetime=updaterestore
-	"Automatically reload VIMRC file after saving
-	autocmd bufwritepost .vimrc source $MYVIMRC
-	autocmd bufwritepost _vimrc source $MYVIMRC
+    "Autoexit to normal mode after 15 seconds of inactivity
+    autocmd CursorHoldI * stopinsert
+    autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=15000
+    autocmd InsertLeave * let &updatetime=updaterestore
+    "Automatically reload VIMRC file after saving
+    autocmd bufwritepost .vimrc source $MYVIMRC
+    autocmd bufwritepost _vimrc source $MYVIMRC
 
     "Mappings for diff mode
     autocmd filterwritepre * if &diff | map <leader>{ :diffget \\2<cr>| endif
@@ -49,6 +51,9 @@ nmap <leader>f* :call JsFunctionLookup()<cr>zz
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 "highlight search results
 set hlsearch
+"ignore capitalization
+set ignorecase
+set smartcase
 "highlight current line
 set cursorline
 "show whitespace
@@ -61,6 +66,7 @@ highlight SpecialKey guifg=#4a4a59
 "toggle whitespace
 nmap <leader>l :set list!<cr>
 
+noremap <silent> <leader>R :! echo reload \| nc vsviryda01vl 32000<cr><cr>
 "tab settings
 set shiftwidth=4
 set tabstop=4
@@ -89,20 +95,20 @@ imap jk <Esc>
 nmap <space> zz
 
 if has("gui_running")
-	set guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
-	"set guifont=Menlo_for_Powerline:h10:cANSI
+    set guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
+    "set guifont=Menlo_for_Powerline:h10:cANSI
 else
-	"let g:Powerline_symbols = 'fancy'
+    "let g:Powerline_symbols = 'fancy'
     set mouse=a
-endif	
+endif
 
 "Powerline fonts for Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
 if exists("g:loaded_syntastic_c_autoload")
-	nmap <leader>c :SyntasticCheck<cr>
-	nmap <leader>e :Errors<cr>
+    nmap <leader>c :SyntasticCheck<cr>
+    nmap <leader>e :Errors<cr>
 endif
 
 nmap <leader>] :bn<cr>
