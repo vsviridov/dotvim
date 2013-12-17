@@ -40,3 +40,6 @@
 [submodule "bundle/emmet.vim"]
 	path = bundle/emmet.vim
 	url = https://github.com/mattn/emmet-vim.git
+[submodule "bundle/lion.vim"]
+	path = bundle/lion.vim
+	url = https://github.com/tommcdo/vim-lion.git

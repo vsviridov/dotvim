@@ -113,6 +113,7 @@ endif
 
 nmap <leader>] :bn<cr>
 nmap <leader>[ :bp<cr>
+nmap <leader>d :bd<cr>
 
 if(has("win32") || has("win16"))
     set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*
