@@ -19,6 +19,15 @@ set wildmenu            "show autocomplete menu
 
 colorscheme hybrid
 
+"Set <leader> before any key remapping
+let mapleader = '\'
+
+"Javascript Function lookup
+function! JsFunctionLookup()
+    let l:Name = expand("<cword>")
+    execute "/function ".l:Name
+endfu
+
 if has("autocmd")
     "Autoexit to normal mode after 15 seconds of inactivity
     autocmd CursorHoldI * stopinsert
@@ -31,21 +40,20 @@ if has("autocmd")
     "Mappings for diff mode
     autocmd filterwritepre * if &diff | map <leader>{ :diffget \\2<cr>| endif
     autocmd filterwritepre * if &diff | map <leader>} :diffget \\3<cr>| endif
+
+    "Custom mappings
+
+    augroup javascript 
+        autocmd!
+        autocmd BufRead *.js nmap <leader>f* :call JsFunctionLookup()<cr>zz
+    augroup END
 endif
-"Set <leader> before any key remapping
-let mapleader = '\'
+
 "open config with \r
 nmap <leader>r :e $MYVIMRC<cr>
 nmap <leader>T :TagbarToggle<cr>
 nmap <silent><leader>w :up<cr>
 imap <silent><leader>w <Esc>:up<cr>a
-
-"Javascript Function lookup
-function! JsFunctionLookup()
-    let l:Name = expand("<cword>")
-    execute "/function ".l:Name
-endfu
-nmap <leader>f* :call JsFunctionLookup()<cr>zz
 
 "Remove search highlight when <Esc> is pressed
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
@@ -102,6 +110,7 @@ else
     set mouse=a
 endif
 
+
 "Powerline fonts for Airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -111,12 +120,12 @@ if exists("g:loaded_syntastic_c_autoload")
     nmap <leader>e :Errors<cr>
 endif
 
+let g:syntastic_java_checkers=['checkstyle']
+let g:syntastic_java_checkstyle_classpath='/usr/share/java/checkstyle.jar:/usr/share/java/commons-logging-1.1.1.jar'
+let g:syntastic_java_checkstyle_conf_file='/usr/share/checkstyle/sun_checks.xml'
+
 nmap <leader>] :bn<cr>
 nmap <leader>[ :bp<cr>
 nmap <leader>d :bd<cr>
 
-if(has("win32") || has("win16"))
-    set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*
-else
-    set wildignore+=*\Deploy\*,*\node_modules\*,*\build\*
-endif
+set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*
