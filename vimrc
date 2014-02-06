@@ -29,6 +29,7 @@ function! JsFunctionLookup()
 endfu
 
 if has("autocmd")
+    filetype plugin indent on
     "Autoexit to normal mode after 15 seconds of inactivity
     autocmd CursorHoldI * stopinsert
     autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=15000
