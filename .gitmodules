@@ -46,3 +46,6 @@
 [submodule "bundle/quickfixsigns.vim"]
 	path = bundle/quickfixsigns.vim
 	url = https://github.com/tomtom/quickfixsigns_vim.git
+[submodule "bundle/gitv.vim"]
+	path = bundle/gitv.vim
+	url = https://github.com/gregsexton/gitv.git

@@ -53,6 +53,8 @@ endif
 "open config with \r
 nmap <leader>r :e $MYVIMRC<cr>
 nmap <leader>T :TagbarToggle<cr>
+nmap <leader>qt :QuickfixsignsToggle<cr>
+nmap <leader>qq :QuickfixsignsSet<cr>
 nmap <silent><leader>w :up<cr>
 imap <silent><leader>w <Esc>:up<cr>a
 
@@ -120,10 +122,6 @@ if exists("g:loaded_syntastic_c_autoload")
     nmap <leader>c :SyntasticCheck<cr>
     nmap <leader>e :Errors<cr>
 endif
-
-let g:syntastic_java_checkers=['checkstyle']
-let g:syntastic_java_checkstyle_classpath='/usr/share/java/checkstyle.jar:/usr/share/java/commons-logging-1.1.1.jar'
-let g:syntastic_java_checkstyle_conf_file='/usr/share/checkstyle/sun_checks.xml'
 
 nmap <leader>] :bn<cr>
 nmap <leader>[ :bp<cr>
