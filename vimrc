@@ -104,10 +104,10 @@ imap jk <Esc>
 nmap <space> zz
 
 if has("gui_running")
-    set guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
-    "set guifont=Menlo_for_Powerline:h10:cANSI
+    "jset guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
+    set guifont=Menlo_for_Powerline:h10:cANSI
 else
-    "let g:Powerline_symbols = 'fancy'
+    let g:Powerline_symbols = 'fancy'
     set mouse=a
 endif
 
