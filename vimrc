@@ -128,3 +128,5 @@ nmap <leader>[ :bp<cr>
 nmap <leader>d :bd<cr>
 
 set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*
+
+set completeopt=longest,menu,menuone
