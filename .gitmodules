@@ -52,3 +52,6 @@
 [submodule "bundle/gocode.vim"]
 	path = bundle/gocode.vim
 	url = https://github.com/Blackrush/vim-gocode.git
+[submodule "bundle/json.vim"]
+	path = bundle/json.vim
+	url = https://github.com/leshill/vim-json.git
