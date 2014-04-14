@@ -5,17 +5,17 @@ set encoding=utf-8
 call pathogen#infect()
 syntax on               "enable syntax hightlighting
 
-set nocompatible
-set modelines=0
-set visualbell
-set laststatus=2        "show 2 status lines
-set number              "show line numbers
 set autoindent          "enable autoindent
-set hidden              "enable multiple dirty buffers
-set encoding=utf-8      "set encoding
 set autoread            "automatically reload files
-set wildmode=full
+set encoding=utf-8      "set encoding
+set hidden              "enable multiple dirty buffers
+set laststatus=2        "show 2 status lines
+set modelines=0
+set nocompatible
+set number              "show line numbers
+set visualbell
 set wildmenu            "show autocomplete menu
+set wildmode=full
 
 colorscheme hybrid
 
@@ -30,22 +30,28 @@ endfu
 
 if has("autocmd")
     filetype plugin indent on
-    "Autoexit to normal mode after 15 seconds of inactivity
-    autocmd CursorHoldI * stopinsert
-    autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=15000
-    autocmd InsertLeave * let &updatetime=updaterestore
-    "Automatically reload VIMRC file after saving
-    autocmd bufwritepost .vimrc source $MYVIMRC
-    autocmd bufwritepost _vimrc source $MYVIMRC
+    augroup InsertTimer
+        au!
+        "Autoexit to normal mode after 15 seconds of inactivity
+        autocmd CursorHoldI * stopinsert
+        autocmd InsertEnter * let updaterestore=&updatetime | set updatetime=15000
+        autocmd InsertLeave * let &updatetime=updaterestore
+    augroup END
+
+    augroup vimrc
+        "Automatically reload VIMRC file after saving
+        au!
+        autocmd bufwritepost $MYVIMRC source $MYVIMRC
+    augroup END
 
     "Mappings for diff mode
     autocmd filterwritepre * if &diff | map <leader>{ :diffget \\2<cr>| endif
     autocmd filterwritepre * if &diff | map <leader>} :diffget \\3<cr>| endif
 
-    "Custom mappings
 
     augroup javascript 
-        autocmd!
+        "Custom mappings
+        au!
         autocmd BufRead *.js nmap <leader>f* :call JsFunctionLookup()<cr>zz
     augroup END
 endif
@@ -130,3 +136,4 @@ nmap <leader>d :bd<cr>
 set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*
 
 set completeopt=longest,menu,menuone
+
