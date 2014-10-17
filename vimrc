@@ -53,6 +53,7 @@ if has("autocmd")
         "Custom mappings
         au!
         autocmd BufRead *.js nmap <leader>f* :call JsFunctionLookup()<cr>zz
+        autocmd BufRead *.js let g:syntastic_javascript_checkers = ['jsxhint']
     augroup END
 endif
 
@@ -83,7 +84,7 @@ highlight SpecialKey guifg=#4a4a59
 "toggle whitespace
 nmap <leader>l :set list!<cr>
 
-noremap <silent> <leader>R :! echo reload \| nc vsviryda01vl 32000<cr><cr>
+noremap <silent> <leader>R :! echo reload \| nc localhost 32000<cr><cr>
 "tab settings
 set shiftwidth=4
 set tabstop=4
@@ -112,16 +113,16 @@ imap jk <Esc>
 nmap <space> zz
 
 if has("gui_running")
-    "jset guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
+    "set guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
     set guifont=Menlo_for_Powerline:h10:cANSI
 else
     let g:Powerline_symbols = 'fancy'
+    let g:airline_powerline_fonts = 1
     set mouse=a
 endif
 
 
 "Powerline fonts for Airline
-let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
 if exists("g:loaded_syntastic_c_autoload")
