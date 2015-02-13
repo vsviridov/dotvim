@@ -1,8 +1,38 @@
 set shell=/bin/bash
 scriptencoding utf-8
 set encoding=utf-8
+set shortmess=I "turn off splash screen
 
-call pathogen#infect()
+let have_plug=filereadable(expand('~/.vim/autoload/plug.vim'))
+if(!have_plug && executable('curl'))
+    echo "Installing Plug"
+
+    !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+if(have_plug)
+    call plug#begin('~/.vim/plugged')
+    Plug 'ivyl/vim-bling'                 "blink search results
+    Plug 'kien/ctrlp.vim'                 "Fuzzy search
+    Plug 'mattn/emmet-vim'                "ZenCoding
+    Plug 'tpope/vim-fugitive'             "Work with git repos
+    Plug 'gregsexton/gitv'                "GitK for Fugitive
+    Plug 'w0ng/vim-hybrid'                "Hybrid colorscheme
+    Plug 'leshill/vim-json'               "JSON support
+    Plug 'tommcdo/vim-lion'               "Align stuff
+    Plug 'evanmiller/nginx-vim-syntax'    "Nginx Syntax
+    Plug 'msanders/snipmate.vim'          "Snippets
+    Plug 'tpope/vim-surround'             "Surround with quotes
+    Plug 'scrooloose/syntastic'           "Syntax checker
+    Plug 'majutsushi/tagbar'              "Ctags integration
+    Plug 'bling/vim-airline'              "Status bar
+    call plug#end()
+
+    if empty(glob("~/.vim/plugged"))
+        PlugInstall
+    endif
+endif
+
 syntax on               "enable syntax hightlighting
 
 set autoindent          "enable autoindent
@@ -17,7 +47,7 @@ set visualbell
 set wildmenu            "show autocomplete menu
 set wildmode=full
 
-colorscheme hybrid
+silent! colorscheme hybrid
 
 "Set <leader> before any key remapping
 let mapleader = '\'
@@ -49,7 +79,7 @@ if has("autocmd")
     autocmd filterwritepre * if &diff | map <leader>} :diffget \\3<cr>| endif
 
 
-    augroup javascript 
+    augroup javascript
         "Custom mappings
         au!
         autocmd BufRead *.js nmap <leader>f* :call JsFunctionLookup()<cr>zz
