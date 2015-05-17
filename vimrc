@@ -12,20 +12,26 @@ endif
 
 if(have_plug)
     call plug#begin('~/.vim/plugged')
-    Plug 'ivyl/vim-bling'                 "blink search results
-    Plug 'kien/ctrlp.vim'                 "Fuzzy search
-    Plug 'mattn/emmet-vim'                "ZenCoding
-    Plug 'tpope/vim-fugitive'             "Work with git repos
-    Plug 'gregsexton/gitv'                "GitK for Fugitive
-    Plug 'w0ng/vim-hybrid'                "Hybrid colorscheme
-    Plug 'leshill/vim-json'               "JSON support
-    Plug 'tommcdo/vim-lion'               "Align stuff
-    Plug 'evanmiller/nginx-vim-syntax'    "Nginx Syntax
-    Plug 'msanders/snipmate.vim'          "Snippets
-    Plug 'tpope/vim-surround'             "Surround with quotes
-    Plug 'scrooloose/syntastic'           "Syntax checker
-    Plug 'majutsushi/tagbar'              "Ctags integration
-    Plug 'bling/vim-airline'              "Status bar
+    Plug 'bling/vim-airline'           "Status bar
+    Plug 'evanmiller/nginx-vim-syntax' "Nginx Syntax
+    Plug 'gregsexton/gitv'             "GitK for Fugitive
+    Plug 'ivyl/vim-bling'              "blink search results
+    Plug 'kien/ctrlp.vim'              "Fuzzy search
+    Plug 'leshill/vim-json'            "JSON support
+    Plug 'majutsushi/tagbar'           "Ctags integration
+    Plug 'mattn/emmet-vim'             "ZenCoding
+    Plug 'msanders/snipmate.vim'       "Snippets
+    Plug 'scrooloose/syntastic'        "Syntax checker
+    Plug 'tommcdo/vim-lion'            "Align stuff
+    Plug 'tpope/vim-fugitive'          "Work with git repos
+    Plug 'tpope/vim-rails'             "Rails integration
+    Plug 'tpope/vim-surround'          "Surround with quotes
+    Plug 'w0ng/vim-hybrid'             "Hybrid colorscheme
+    Plug 'slim-template/vim-slim'      "SLIM Markup Syntax
+    Plug 'dag/vim-fish'                "Fish Shell Support
+    Plug 'rking/ag.vim'                "Silver Searcher Support
+    Plug 'pangloss/vim-javascript'     "Vim Javascript support
+    Plug 'kennethzfeng/vim-raml'       "RAML Bindings
     call plug#end()
 
     if empty(glob("~/.vim/plugged"))
@@ -56,10 +62,21 @@ let mapleader = '\'
 function! JsFunctionLookup()
     let l:Name = expand("<cword>")
     execute "/function ".l:Name
-endfu
+endfun
+
+function! <SID>StripTrailingWhitespace()
+    let pos = getpos('.')
+    %s/\s\+$//e
+    call setpos('.', pos)
+endfun
 
 if has("autocmd")
     filetype plugin indent on
+
+    augroup CleanWhitespace
+        autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
+    augroup END
+
     augroup InsertTimer
         au!
         "Autoexit to normal mode after 15 seconds of inactivity
@@ -75,16 +92,32 @@ if has("autocmd")
     augroup END
 
     "Mappings for diff mode
-    autocmd filterwritepre * if &diff | map <leader>{ :diffget \\2<cr>| endif
-    autocmd filterwritepre * if &diff | map <leader>} :diffget \\3<cr>| endif
-
+    autocmd filterwritepre * if &diff | map <leader>{ :diffget LOCAL<cr>| endif
+    autocmd filterwritepre * if &diff | map <leader>\| :diffget BASE<cr>| endif
+    autocmd filterwritepre * if &diff | map <leader>} :diffget REMOTE<cr>| endif
 
     augroup javascript
         "Custom mappings
         au!
+        autocmd FileType javascript set ai sw=2 sts=2 et
         autocmd BufRead *.js nmap <leader>f* :call JsFunctionLookup()<cr>zz
-        autocmd BufRead *.js let g:syntastic_javascript_checkers = ['jsxhint']
+        autocmd BufRead *.js let g:syntastic_javascript_checkers = ['jshint', 'flow']
+        "autocmd BufRead *.js let g:syntastic_javascript_flow_args = "--all"
     augroup END
+
+    augroup ruby
+        au!
+        autocmd FileType ruby,haml,eruby,yaml,html,sass,cucumber,slim set ai sw=2 sts=2 et
+        autocmd BufRead *.rb let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+        autocmd BufRead *.rb let g:syntastic_ruby_rubocop_exec = '/usr/bin/rubocop'
+    augroup END
+endif
+
+" Set up CtrlP with faster alternative, if possible
+if(executable('ag'))
+  let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
+              \ --ignore .git
+              \ -g ""'
 endif
 
 "open config with \r
@@ -144,7 +177,9 @@ nmap <space> zz
 
 if has("gui_running")
     "set guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
-    set guifont=Menlo_for_Powerline:h10:cANSI
+    if has("win32")
+        set guifont=Menlo_for_Powerline:h10:cANSI
+    endif
 else
     let g:Powerline_symbols = 'fancy'
     let g:airline_powerline_fonts = 1
@@ -155,7 +190,7 @@ endif
 "Powerline fonts for Airline
 let g:airline#extensions#tabline#enabled = 1
 
-if exists("g:loaded_syntastic_c_autoload")
+if exists("g:loaded_syntastic_checker")
     nmap <leader>c :SyntasticCheck<cr>
     nmap <leader>e :Errors<cr>
 endif
