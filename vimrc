@@ -12,26 +12,30 @@ endif
 
 if(have_plug)
     call plug#begin('~/.vim/plugged')
-    Plug 'bling/vim-airline'           "Status bar
-    Plug 'evanmiller/nginx-vim-syntax' "Nginx Syntax
-    Plug 'gregsexton/gitv'             "GitK for Fugitive
-    Plug 'ivyl/vim-bling'              "blink search results
-    Plug 'kien/ctrlp.vim'              "Fuzzy search
-    Plug 'leshill/vim-json'            "JSON support
-    Plug 'majutsushi/tagbar'           "Ctags integration
-    Plug 'mattn/emmet-vim'             "ZenCoding
-    Plug 'msanders/snipmate.vim'       "Snippets
-    Plug 'scrooloose/syntastic'        "Syntax checker
-    Plug 'tommcdo/vim-lion'            "Align stuff
-    Plug 'tpope/vim-fugitive'          "Work with git repos
-    Plug 'tpope/vim-rails'             "Rails integration
-    Plug 'tpope/vim-surround'          "Surround with quotes
-    Plug 'w0ng/vim-hybrid'             "Hybrid colorscheme
-    Plug 'slim-template/vim-slim'      "SLIM Markup Syntax
-    Plug 'dag/vim-fish'                "Fish Shell Support
-    Plug 'rking/ag.vim'                "Silver Searcher Support
-    Plug 'pangloss/vim-javascript'     "Vim Javascript support
-    Plug 'kennethzfeng/vim-raml'       "RAML Bindings
+    Plug 'w0ng/vim-hybrid'                  " Hybrid colorscheme
+    Plug 'bling/vim-airline'                " Status bar
+    Plug 'gregsexton/gitv'                  " GitK for Fugitive
+    Plug 'ivyl/vim-bling'                   " blink search results
+    Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
+    Plug 'majutsushi/tagbar'                " Ctags integration
+    Plug 'msanders/snipmate.vim'            " Snippets
+    Plug 'tommcdo/vim-lion'                 " Align stuff
+    Plug 'tpope/vim-fugitive'               " Work with git repos
+    Plug 'tpope/vim-surround'               " Surround with quotes
+    Plug 'rking/ag.vim'                     " Silver Searcher Support
+    Plug 'junegunn/rainbow_parentheses.vim' " Color matched parenthesis
+                                            " Language
+    Plug 'dag/vim-fish'                     " Fish Shell Support
+    Plug 'tpope/vim-rails'                  " Rails integration
+    Plug 'mattn/emmet-vim'                  " ZenCoding
+                                            " Syntax
+    Plug 'evanmiller/nginx-vim-syntax'      " Nginx Syntax
+    Plug 'scrooloose/syntastic'             " Syntax checker
+    Plug 'leshill/vim-json'                 " JSON support
+    Plug 'slim-template/vim-slim'           " SLIM Markup Syntax
+    Plug 'pangloss/vim-javascript'          " Vim Javascript support
+    Plug 'kennethzfeng/vim-raml'            " RAML Bindings
+    Plug 'digitaltoad/vim-jade'             " JADE bindings
     call plug#end()
 
     if empty(glob("~/.vim/plugged"))
@@ -74,6 +78,7 @@ if has("autocmd")
     filetype plugin indent on
 
     augroup CleanWhitespace
+        au!
         autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
     augroup END
 
