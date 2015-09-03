@@ -12,30 +12,31 @@ endif
 
 if(have_plug)
     call plug#begin('~/.vim/plugged')
-    Plug 'w0ng/vim-hybrid'                  " Hybrid colorscheme
-    Plug 'bling/vim-airline'                " Status bar
-    Plug 'gregsexton/gitv'                  " GitK for Fugitive
-    Plug 'ivyl/vim-bling'                   " blink search results
-    Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
-    Plug 'majutsushi/tagbar'                " Ctags integration
-    Plug 'msanders/snipmate.vim'            " Snippets
-    Plug 'tommcdo/vim-lion'                 " Align stuff
-    Plug 'tpope/vim-fugitive'               " Work with git repos
-    Plug 'tpope/vim-surround'               " Surround with quotes
-    Plug 'rking/ag.vim'                     " Silver Searcher Support
-    Plug 'junegunn/rainbow_parentheses.vim' " Color matched parenthesis
-                                            " Language
-    Plug 'dag/vim-fish'                     " Fish Shell Support
-    Plug 'tpope/vim-rails'                  " Rails integration
-    Plug 'mattn/emmet-vim'                  " ZenCoding
-                                            " Syntax
-    Plug 'evanmiller/nginx-vim-syntax'      " Nginx Syntax
-    Plug 'scrooloose/syntastic'             " Syntax checker
-    Plug 'leshill/vim-json'                 " JSON support
-    Plug 'slim-template/vim-slim'           " SLIM Markup Syntax
-    Plug 'pangloss/vim-javascript'          " Vim Javascript support
-    Plug 'kennethzfeng/vim-raml'            " RAML Bindings
-    Plug 'digitaltoad/vim-jade'             " JADE bindings
+    Plug 'w0ng/vim-hybrid'                   " Hybrid colorscheme
+    Plug 'bling/vim-airline'                 " Status bar
+    Plug 'gregsexton/gitv'                   " GitK for Fugitive
+    Plug 'ivyl/vim-bling'                    " blink search results
+    Plug 'ctrlpvim/ctrlp.vim'                " Fuzzy search
+    Plug 'majutsushi/tagbar'                 " Ctags integration
+    Plug 'msanders/snipmate.vim'             " Snippets
+    Plug 'tommcdo/vim-lion'                  " Align stuff
+    Plug 'tpope/vim-fugitive'                " Work with git repos
+    Plug 'tpope/vim-surround'                " Surround with quotes
+    Plug 'rking/ag.vim'                      " Silver Searcher Support
+    Plug 'junegunn/rainbow_parentheses.vim'  " Color matched parenthesis
+                                             " Language
+    Plug 'dag/vim-fish'                      " Fish Shell Support
+    Plug 'tpope/vim-rails'                   " Rails integration
+    Plug 'mattn/emmet-vim'                   " ZenCoding
+                                             " Syntax
+    Plug 'evanmiller/nginx-vim-syntax'       " Nginx Syntax
+    Plug 'scrooloose/syntastic'              " Syntax checker
+    Plug 'leshill/vim-json'                  " JSON support
+    Plug 'slim-template/vim-slim'            " SLIM Markup Syntax
+    Plug 'pangloss/vim-javascript'           " Vim Javascript support
+    Plug 'kennethzfeng/vim-raml'             " RAML Bindings
+    Plug 'digitaltoad/vim-jade'              " JADE bindings
+    Plug 'Matt-Deacalion/vim-systemd-syntax' " Systemd Syntax
     call plug#end()
 
     if empty(glob("~/.vim/plugged"))
