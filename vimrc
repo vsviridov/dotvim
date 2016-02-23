@@ -1,13 +1,15 @@
-set shell=/bin/bash
+"set shell=/bin/sh
 scriptencoding utf-8
 set encoding=utf-8
 set shortmess=I "turn off splash screen
 
-let have_plug=filereadable(expand('~/.vim/autoload/plug.vim'))
+let vim_files=fnamemodify(expand("$MYVIMRC"), ":p:h")
+let plug_path=expand(vim_files . '/autoload/plug.vim')
+let have_plug=filereadable(plug_path)
 if(!have_plug && executable('curl'))
     echo "Installing Plug"
 
-    !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    echo '!curl -fLo ' . plug_path . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 endif
 
 if(have_plug)
