@@ -3,7 +3,7 @@ scriptencoding utf-8
 set encoding=utf-8
 set shortmess=I "turn off splash screen
 
-let vim_files=fnamemodify(expand("$MYVIMRC"), ":p:h")
+let vim_files=fnamemodify(resolve(expand("$MYVIMRC")), ":p:h")
 let plug_path=expand(vim_files . '/autoload/plug.vim')
 let have_plug=filereadable(plug_path)
 if(!have_plug && executable('curl'))
