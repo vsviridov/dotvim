@@ -9,7 +9,7 @@ let have_plug=filereadable(plug_path)
 if(!have_plug && executable('curl'))
     echo "Installing Plug"
 
-    echo '!curl -fLo "' . plug_path . '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    execute '!curl -fLo "' . plug_path . '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 endif
 
 if(have_plug)
@@ -221,7 +221,7 @@ else
     set mouse=a
 endif
 
-colorscheme hybrid
+silent! colorscheme hybrid
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
