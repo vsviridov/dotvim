@@ -1,17 +1,19 @@
-set shell=/bin/bash
+"  set shell=/bin/sh
 scriptencoding utf-8
 set encoding=utf-8
 set shortmess=I "turn off splash screen
 
-let have_plug=filereadable(expand('~/.vim/autoload/plug.vim'))
+let vim_files=fnamemodify(resolve(expand("$MYVIMRC")), ":p:h")
+let plug_path=expand(vim_files . '/autoload/plug.vim')
+let have_plug=filereadable(plug_path)
 if(!have_plug && executable('curl'))
     echo "Installing Plug"
 
-    !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    execute '!curl -fLo "' . plug_path . '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 endif
 
 if(have_plug)
-    call plug#begin('~/.vim/plugged')
+    call plug#begin(vim_files . '/plugged')
     Plug 'w0ng/vim-hybrid'                  " Hybrid colorscheme
     Plug 'vim-airline/vim-airline'          " Status bar
     Plug 'vim-airline/vim-airline-themes'   " Status bar themes
@@ -26,7 +28,6 @@ if(have_plug)
     Plug 'rking/ag.vim'                     " Silver Searcher Support
     Plug 'junegunn/rainbow_parentheses.vim' " Color matched parenthesis
     Plug 'tpope/vim-commentary'             " Commenting
-    Plug 'unblevable/quick-scope'           " f/t navigation helper
 
     " Language
     Plug 'dag/vim-fish'                     " Fish Shell Support
@@ -45,7 +46,7 @@ if(have_plug)
     " Plug 'tmux-plugins/vim-tmux'            " tmux.conf
     call plug#end()
 
-    if empty(glob("~/.vim/plugged"))
+    if empty(glob(vim_files . '/plugged'))
         PlugInstall
     endif
 endif
@@ -66,7 +67,6 @@ set wildmode=full
 
 set background=dark
 silent! colorscheme hybrid
-
 "Set <leader> before any key remapping
 let mapleader = '\'
 
@@ -203,18 +203,30 @@ nmap <leader>] :bn<cr>
 nmap <leader>[ :bp<cr>
 nmap <leader>d :bd<cr>
 
+if($ConEmuANSI == 'ON' && !has("gui_running"))
+    set term=xterm
+    set t_Co=256
+    let &t_AB="\e[48;5;%dm"
+    let &t_AF="\e[38;5;%dm"
+    inoremap <Esc>[62~ <C-X><C-E>
+    inoremap <Esc>[63~ <C-X><C-Y>
+    nnoremap <Esc>[62~ <C-E>
+    nnoremap <Esc>[63~ <C-Y>
+endif
+
 if has("gui_running")
-    "set guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
+    set go-=mTr " disable toolbar, menubar and scrollbar
     if has("win32")
-        set guifont=Menlo_for_Powerline:h10:cANSI
+        set guifont=Source_Code_Pro:h12:cANSI
     endif
 else
-    "Powerline fonts for Airline
-    let g:airline_powerline_fonts = 1
     set mouse=a
 endif
 
+silent! colorscheme hybrid
+let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+
 
 if exists("g:loaded_syntastic_checker")
     nmap <leader>c :SyntasticCheck<cr>
