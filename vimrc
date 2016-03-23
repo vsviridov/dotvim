@@ -12,31 +12,37 @@ endif
 
 if(have_plug)
     call plug#begin('~/.vim/plugged')
-    Plug 'w0ng/vim-hybrid'                   " Hybrid colorscheme
-    Plug 'bling/vim-airline'                 " Status bar
-    Plug 'gregsexton/gitv'                   " GitK for Fugitive
-    Plug 'ivyl/vim-bling'                    " blink search results
-    Plug 'ctrlpvim/ctrlp.vim'                " Fuzzy search
-    Plug 'majutsushi/tagbar'                 " Ctags integration
-    Plug 'msanders/snipmate.vim'             " Snippets
-    Plug 'tommcdo/vim-lion'                  " Align stuff
-    Plug 'tpope/vim-fugitive'                " Work with git repos
-    Plug 'tpope/vim-surround'                " Surround with quotes
-    Plug 'rking/ag.vim'                      " Silver Searcher Support
-    Plug 'junegunn/rainbow_parentheses.vim'  " Color matched parenthesis
-                                             " Language
-    Plug 'dag/vim-fish'                      " Fish Shell Support
-    Plug 'tpope/vim-rails'                   " Rails integration
-    Plug 'mattn/emmet-vim'                   " ZenCoding
-                                             " Syntax
-    Plug 'evanmiller/nginx-vim-syntax'       " Nginx Syntax
-    Plug 'scrooloose/syntastic'              " Syntax checker
-    Plug 'leshill/vim-json'                  " JSON support
-    Plug 'slim-template/vim-slim'            " SLIM Markup Syntax
-    Plug 'pangloss/vim-javascript'           " Vim Javascript support
-    Plug 'kennethzfeng/vim-raml'             " RAML Bindings
-    Plug 'digitaltoad/vim-jade'              " JADE bindings
-    Plug 'Matt-Deacalion/vim-systemd-syntax' " Systemd Syntax
+    Plug 'w0ng/vim-hybrid'                  " Hybrid colorscheme
+    Plug 'vim-airline/vim-airline'          " Status bar
+    Plug 'vim-airline/vim-airline-themes'   " Status bar themes
+    Plug 'gregsexton/gitv'                  " GitK for Fugitive
+    Plug 'ivyl/vim-bling'                   " blink search results
+    Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
+    Plug 'majutsushi/tagbar'                " Ctags integration
+    Plug 'msanders/snipmate.vim'            " Snippets
+    Plug 'tommcdo/vim-lion'                 " Align stuff
+    Plug 'tpope/vim-fugitive'               " Work with git repos
+    Plug 'tpope/vim-surround'               " Surround with quotes
+    Plug 'rking/ag.vim'                     " Silver Searcher Support
+    Plug 'junegunn/rainbow_parentheses.vim' " Color matched parenthesis
+    Plug 'tpope/vim-commentary'             " Commenting
+    Plug 'unblevable/quick-scope'           " f/t navigation helper
+
+    " Language
+    Plug 'dag/vim-fish'                     " Fish Shell Support
+    Plug 'tpope/vim-rails'                  " Rails integration
+    Plug 'mattn/emmet-vim'                  " ZenCoding
+    " Syntax
+    Plug 'scrooloose/syntastic'             " Syntax checker
+    Plug 'sheerun/vim-polyglot'             " Language Support Bundle
+    " Plug 'evanmiller/nginx-vim-syntax'      " Nginx Syntax
+    " Plug 'leshill/vim-json'                 " JSON support
+    " Plug 'slim-template/vim-slim'           " SLIM Markup Syntax
+    " Plug 'pangloss/vim-javascript'          " Vim Javascript support
+    " Plug 'kennethzfeng/vim-raml'            " RAML Bindings
+    " Plug 'digitaltoad/vim-jade'             " JADE bindings
+    " Plug 'mxw/vim-jsx'                      " JSX
+    " Plug 'tmux-plugins/vim-tmux'            " tmux.conf
     call plug#end()
 
     if empty(glob("~/.vim/plugged"))
@@ -58,6 +64,7 @@ set visualbell
 set wildmenu            "show autocomplete menu
 set wildmode=full
 
+set background=dark
 silent! colorscheme hybrid
 
 "Set <leader> before any key remapping
@@ -107,8 +114,8 @@ if has("autocmd")
         au!
         autocmd FileType javascript set ai sw=2 sts=2 et
         autocmd BufRead *.js nmap <leader>f* :call JsFunctionLookup()<cr>zz
-        autocmd BufRead *.js let g:syntastic_javascript_checkers = ['jshint', 'flow']
-        "autocmd BufRead *.js let g:syntastic_javascript_flow_args = "--all"
+        "autocmd BufRead *.js,*.jsx let g:syntastic_javascript_checkers = ['eslint']
+        map <leader>jj :set ft=javascript.jsx<cr>
     augroup END
 
     augroup ruby
@@ -116,6 +123,17 @@ if has("autocmd")
         autocmd FileType ruby,haml,eruby,yaml,html,sass,cucumber,slim set ai sw=2 sts=2 et
         autocmd BufRead *.rb let g:syntastic_ruby_checkers = ['rubocop', 'mri']
         autocmd BufRead *.rb let g:syntastic_ruby_rubocop_exec = '/usr/bin/rubocop'
+    augroup END
+
+    augroup html
+        au!
+        au BufNewFile,BufRead *.ejs set filetype=html
+        autocmd FileType html call SetHtmlOptions()
+        function! SetHtmlOptions()
+          if(executable('tidy'))
+            let g:syntastic_html_tidy_ignore_errors = [ '<meta> proprietary attribute "property"', '<html> proprietary attribute "prefix"', 'trimming empty <span>', 'trimming empty <i>' ]
+          endif
+        endfunction
     augroup END
 endif
 
@@ -133,6 +151,7 @@ nmap <leader>qt :QuickfixsignsToggle<cr>
 nmap <leader>qq :QuickfixsignsSet<cr>
 nmap <silent><leader>w :up<cr>
 imap <silent><leader>w <Esc>:up<cr>a
+cmap w!! w !sudo tee % >/dev/null
 
 "Remove search highlight when <Esc> is pressed
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
@@ -180,6 +199,9 @@ nnoremap k gk
 imap jk <Esc>
 "press space in normal mode to center screen
 nmap <space> zz
+nmap <leader>] :bn<cr>
+nmap <leader>[ :bp<cr>
+nmap <leader>d :bd<cr>
 
 if has("gui_running")
     "set guifont=Consolas:h10:cRUSSIAN,Lucida\ Console:h10:cRUSSIAN
@@ -187,13 +209,11 @@ if has("gui_running")
         set guifont=Menlo_for_Powerline:h10:cANSI
     endif
 else
-    let g:Powerline_symbols = 'fancy'
+    "Powerline fonts for Airline
     let g:airline_powerline_fonts = 1
     set mouse=a
 endif
 
-
-"Powerline fonts for Airline
 let g:airline#extensions#tabline#enabled = 1
 
 if exists("g:loaded_syntastic_checker")
@@ -205,7 +225,7 @@ nmap <leader>] :bn<cr>
 nmap <leader>[ :bp<cr>
 nmap <leader>d :bd<cr>
 
-set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*,*/bower_components/*
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
+set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*,*/bower_components/*,*/jspm_packages/*
 set completeopt=longest,menu,menuone
-
