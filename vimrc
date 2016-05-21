@@ -1,4 +1,4 @@
-"  set shell=/bin/sh
+set shell=/bin/sh
 scriptencoding utf-8
 set encoding=utf-8
 set shortmess=I "turn off splash screen
@@ -21,7 +21,7 @@ if(have_plug)
     Plug 'ivyl/vim-bling'                   " blink search results
     Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
     Plug 'majutsushi/tagbar'                " Ctags integration
-    Plug 'msanders/snipmate.vim'            " Snippets
+    Plug 'garbas/snipmate.vim'              " Snippets
     Plug 'tommcdo/vim-lion'                 " Align stuff
     Plug 'tpope/vim-fugitive'               " Work with git repos
     Plug 'tpope/vim-surround'               " Surround with quotes
@@ -129,7 +129,7 @@ if has("autocmd")
         autocmd FileType html call SetHtmlOptions()
         function! SetHtmlOptions()
           if(executable('tidy'))
-            let g:syntastic_html_tidy_ignore_errors = [ '<meta> proprietary attribute "property"', '<html> proprietary attribute "prefix"', 'trimming empty <span>', 'trimming empty <i>' ]
+            let g:syntastic_html_tidy_ignore_errors = [ '<meta> proprietary attribute "property"', '<html> proprietary attribute "prefix"', 'trimming empty <span>', 'trimming empty <i>', '<script> proprietary attribute "integrity"', '<link> proprietary attribute "integrity"', '<link> proprietary attribute "crossorigin"', '<script> proprietary attribute "crossorigin"']
           endif
         endfunction
     augroup END
@@ -217,11 +217,15 @@ if has("gui_running")
     if has("win32")
         set guifont=Source_Code_Pro:h12:cANSI
     endif
+    if has("osx")
+       set guifont=Source_Code_Pro:h13
+    endif
 else
     set mouse=a
 endif
 
 silent! colorscheme hybrid
+set background=dark
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
