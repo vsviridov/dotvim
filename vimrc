@@ -65,6 +65,8 @@ set visualbell
 set wildmenu            "show autocomplete menu
 set wildmode=full
 
+set background=dark
+silent! colorscheme hybrid
 "Set <leader> before any key remapping
 let mapleader = '\'
 
@@ -235,5 +237,11 @@ if exists("g:loaded_syntastic_checker")
     nmap <leader>e :Errors<cr>
 endif
 
-set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*,*/jspm_packages/*
+nmap <leader>] :bn<cr>
+nmap <leader>[ :bp<cr>
+nmap <leader>d :bd<cr>
+
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*,*/bower_components/*,*/jspm_packages/*
 set completeopt=longest,menu,menuone
