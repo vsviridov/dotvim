@@ -21,13 +21,17 @@ if(have_plug)
     Plug 'ivyl/vim-bling'                   " blink search results
     Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
     Plug 'majutsushi/tagbar'                " Ctags integration
-    Plug 'garbas/snipmate.vim'              " Snippets
+    Plug 'marcweber/vim-addon-mw-utils' |
+    Plug 'tomtom/tlib_vim' |
+    Plug 'garbas/vim-snipmate'              " Snippets
+    Plug 'honza/vim-snippets'               " Default snippet collection
     Plug 'tommcdo/vim-lion'                 " Align stuff
     Plug 'tpope/vim-fugitive'               " Work with git repos
     Plug 'tpope/vim-surround'               " Surround with quotes
     Plug 'rking/ag.vim'                     " Silver Searcher Support
     Plug 'junegunn/rainbow_parentheses.vim' " Color matched parenthesis
     Plug 'tpope/vim-commentary'             " Commenting
+    Plug 'mtth/scratch.vim'                 " Scratch Buffer
 
     " Language
     Plug 'dag/vim-fish'                     " Fish Shell Support
@@ -114,7 +118,7 @@ if has("autocmd")
         au!
         autocmd FileType javascript set ai sw=2 sts=2 et
         autocmd BufRead *.js nmap <leader>f* :call JsFunctionLookup()<cr>zz
-        "autocmd BufRead *.js,*.jsx let g:syntastic_javascript_checkers = ['eslint']
+        autocmd BufRead *.js,*.jsx let g:syntastic_javascript_checkers = ['eslint']
         map <leader>jj :set ft=javascript.jsx<cr>
     augroup END
 
