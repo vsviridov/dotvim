@@ -1,4 +1,3 @@
-set shell=/bin/sh
 scriptencoding utf-8
 set encoding=utf-8
 set shortmess=I "turn off splash screen
@@ -14,6 +13,7 @@ endif
 
 if(have_plug)
     call plug#begin(vim_files . '/plugged')
+    Plug 'tpope/vim-sensible'               " Sensible defaults for vim
     Plug 'w0ng/vim-hybrid'                  " Hybrid colorscheme
     Plug 'vim-airline/vim-airline'          " Status bar
     Plug 'vim-airline/vim-airline-themes'   " Status bar themes
@@ -22,14 +22,13 @@ if(have_plug)
     Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
     Plug 'majutsushi/tagbar'                " Ctags integration
     Plug 'marcweber/vim-addon-mw-utils' |
-    Plug 'tomtom/tlib_vim' |
-    Plug 'garbas/vim-snipmate'              " Snippets
+        Plug 'tomtom/tlib_vim' |
+        Plug 'garbas/vim-snipmate'          " Snippets
     Plug 'honza/vim-snippets'               " Default snippet collection
     Plug 'tommcdo/vim-lion'                 " Align stuff
     Plug 'tpope/vim-fugitive'               " Work with git repos
     Plug 'tpope/vim-surround'               " Surround with quotes
     Plug 'rking/ag.vim'                     " Silver Searcher Support
-    Plug 'junegunn/rainbow_parentheses.vim' " Color matched parenthesis
     Plug 'tpope/vim-commentary'             " Commenting
     Plug 'mtth/scratch.vim'                 " Scratch Buffer
 
@@ -37,17 +36,12 @@ if(have_plug)
     Plug 'dag/vim-fish'                     " Fish Shell Support
     Plug 'tpope/vim-rails'                  " Rails integration
     Plug 'mattn/emmet-vim'                  " ZenCoding
-    " Syntax
-    Plug 'scrooloose/syntastic'             " Syntax checker
     Plug 'sheerun/vim-polyglot'             " Language Support Bundle
-    " Plug 'evanmiller/nginx-vim-syntax'      " Nginx Syntax
-    " Plug 'leshill/vim-json'                 " JSON support
-    " Plug 'slim-template/vim-slim'           " SLIM Markup Syntax
-    " Plug 'pangloss/vim-javascript'          " Vim Javascript support
-    " Plug 'kennethzfeng/vim-raml'            " RAML Bindings
-    " Plug 'digitaltoad/vim-jade'             " JADE bindings
-    " Plug 'mxw/vim-jsx'                      " JSX
-    " Plug 'tmux-plugins/vim-tmux'            " tmux.conf
+
+    if version >= 800
+        Plug 'maralla/validator.vim'        " Async syntax checker
+        Plug 'maralla/completor.vim', { 'do': 'make js' }        " Code completion
+    endif
     call plug#end()
 
     if empty(glob(vim_files . '/plugged'))
@@ -55,18 +49,11 @@ if(have_plug)
     endif
 endif
 
-syntax on               "enable syntax hightlighting
-
-set autoindent          "enable autoindent
-set autoread            "automatically reload files
-set encoding=utf-8      "set encoding
 set hidden              "enable multiple dirty buffers
-set laststatus=2        "show 2 status lines
 set modelines=0
 set nocompatible
 set number              "show line numbers
 set visualbell
-set wildmenu            "show autocomplete menu
 set wildmode=full
 
 set background=dark
@@ -234,6 +221,10 @@ silent! colorscheme hybrid
 set background=dark
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+
+let g:validator_javascript_checkers = ['eslint']
+let g:validator_filetype_map = { "jsx": "javascript", "javascript.jsx": "javascript" }
+let g:validator_permament_sign = 1
 
 
 if exists("g:loaded_syntastic_checker")
