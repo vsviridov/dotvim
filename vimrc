@@ -129,10 +129,15 @@ if has("autocmd")
 endif
 
 " Set up CtrlP with faster alternative, if possible
-if(executable('ag'))
-  let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-              \ --ignore .git
-              \ -g ""'
+if executable('ag')
+  " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast, respects .gitignore
+  " and .agignore. Ignores hidden files by default.
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
+else
+  "ctrl+p ignore files in .gitignore
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 endif
 
 "open config with \r
@@ -215,6 +220,16 @@ if has("gui_running")
     endif
 else
     set mouse=a
+    if $TERM_PROGRAM == 'iTerm.app'
+        " different cursors for insert vs normal mode
+        if exists('$TMUX')
+            let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+            let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+        else
+            let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+            let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+        endif
+    endif
 endif
 
 silent! colorscheme hybrid
@@ -225,7 +240,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:validator_javascript_checkers = ['eslint']
 let g:validator_filetype_map = { "jsx": "javascript", "javascript.jsx": "javascript" }
 let g:validator_permament_sign = 1
-
+" let g:validator_auto_open_quickfix = 1
 
 if exists("g:loaded_syntastic_checker")
     nmap <leader>c :SyntasticCheck<cr>
@@ -238,5 +253,32 @@ nmap <leader>d :bd<cr>
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
-set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*,*/bower_components/*,*/jspm_packages/*
+" set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*,*/bower_components/*,*/jspm_packages/*
 set completeopt=longest,menu,menuone
+
+" Stolen from maralla/dotvim
+
+function! EnsureExists(path)
+    if !isdirectory(expand(a:path))
+        call mkdir(expand(a:path))
+    endif
+endfunction
+
+" persistent undo
+if exists('+undofile')
+    set undofile
+    set undodir=~/.vim/.cache/undo
+endif
+
+" backups
+set backup
+set backupdir=~/.vim/.cache/backup
+
+" swap files
+set directory=~/.vim/.cache/swap
+set noswapfile
+
+call EnsureExists('~/.vim/.cache')
+call EnsureExists(&undodir)
+call EnsureExists(&backupdir)
+call EnsureExists(&directory)
