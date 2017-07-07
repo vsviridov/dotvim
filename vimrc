@@ -17,26 +17,29 @@ if(have_plug)
     Plug 'w0ng/vim-hybrid'                  " Hybrid colorscheme
     Plug 'vim-airline/vim-airline'          " Status bar
     Plug 'vim-airline/vim-airline-themes'   " Status bar themes
-    Plug 'gregsexton/gitv'                  " GitK for Fugitive
+    " Plug 'gregsexton/gitv'                  " GitK for Fugitive
     Plug 'ivyl/vim-bling'                   " blink search results
     Plug 'ctrlpvim/ctrlp.vim'               " Fuzzy search
-    Plug 'majutsushi/tagbar'                " Ctags integration
-    Plug 'marcweber/vim-addon-mw-utils' |
-        Plug 'tomtom/tlib_vim' |
-        Plug 'garbas/vim-snipmate'          " Snippets
-    Plug 'honza/vim-snippets'               " Default snippet collection
+    " Plug 'majutsushi/tagbar'                " Ctags integration
+    " Plug 'marcweber/vim-addon-mw-utils' |
+    "     Plug 'tomtom/tlib_vim' |
+    "     Plug 'garbas/vim-snipmate'          " Snippets
+    " Plug 'honza/vim-snippets'               " Default snippet collection
     Plug 'tommcdo/vim-lion'                 " Align stuff
     Plug 'tpope/vim-fugitive'               " Work with git repos
     Plug 'tpope/vim-surround'               " Surround with quotes
     Plug 'rking/ag.vim'                     " Silver Searcher Support
     Plug 'tpope/vim-commentary'             " Commenting
-    Plug 'mtth/scratch.vim'                 " Scratch Buffer
+    " Plug 'mtth/scratch.vim'                 " Scratch Buffer
+    " Plug 'vimwiki/vimwiki'                  " http://vimwiki.github.io/
 
     " Language
     Plug 'dag/vim-fish'                     " Fish Shell Support
-    Plug 'tpope/vim-rails'                  " Rails integration
+    " Plug 'tpope/vim-rails'                  " Rails integration
     Plug 'mattn/emmet-vim'                  " ZenCoding
     Plug 'sheerun/vim-polyglot'             " Language Support Bundle
+
+    Plug 'sbdchd/neoformat'                 " Automatic code formatting
 
     if version >= 800
         Plug 'maralla/validator.vim'        " Async syntax checker
@@ -93,20 +96,32 @@ if has("autocmd")
         "Automatically reload VIMRC file after saving
         au!
         autocmd bufwritepost $MYVIMRC source $MYVIMRC
+        if (exists('g:loaded_airline') && g:loaded_airline)
+            autocmd bufwritepost $MYVIMRC AirlineRefresh
+        endif
     augroup END
 
-    "Mappings for diff mode
-    autocmd filterwritepre * if &diff | map <leader>{ :diffget LOCAL<cr>| endif
-    autocmd filterwritepre * if &diff | map <leader>\| :diffget BASE<cr>| endif
-    autocmd filterwritepre * if &diff | map <leader>} :diffget REMOTE<cr>| endif
+    augroup diffmode
+      au!
+      "Mappings for diff mode
+      autocmd filterwritepre * if &diff | map <leader>{ :diffget LOCAL<cr>| endif
+      autocmd filterwritepre * if &diff | map <leader>\| :diffget BASE<cr>| endif
+      autocmd filterwritepre * if &diff | map <leader>} :diffget REMOTE<cr>| endif
+    augroup END
 
     augroup javascript
         "Custom mappings
         au!
         autocmd FileType javascript set ai sw=2 sts=2 et
-        autocmd BufRead *.js nmap <leader>f* :call JsFunctionLookup()<cr>zz
+        autocmd FileType javascript map <leader>jj :set ft=javascript.jsx<cr>
+        " autocmd BufRead *.js nmap <leader>f* :call JsFunctionLookup()<cr>zz
         autocmd BufRead *.js,*.jsx let g:syntastic_javascript_checkers = ['eslint']
-        map <leader>jj :set ft=javascript.jsx<cr>
+        autocmd BufWritePre *.js Neoformat
+        let g:neoformat_javascript_prettier = {
+          \ 'exe' : 'prettier',
+          \ 'args': ['--stdin', '--trailing-comma=es5'],
+          \ 'stdin': 1
+          \ }
     augroup END
 
     augroup ruby
@@ -255,6 +270,15 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*,*/bower_components/*,*/jspm_packages/*
 set completeopt=longest,menu,menuone
+
+" Borrowed from flukus
+" http://flukus.github.io/2016/04/15/2016_04_15_Background-Builds-with-Vim-8/#comment-3028433686
+
+if (exists('g:loaded_airline') && exists('g:loaded_validator_plugin'))
+    call airline#parts#define_function('validator', 'validator#get_status_string')
+    let g:airline_section_error = airline#section#create(['validator'])
+endif
+
 
 " Stolen from maralla/dotvim
 
