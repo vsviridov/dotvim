@@ -1,6 +1,18 @@
  if has("autocmd")
      filetype plugin indent on
 
+     augroup InvisibleCharsHighlight
+         au!
+
+         autocmd ColorScheme * :call ResetColors()
+
+         function! ResetColors()
+             "Invisible character colors
+             highlight NonText guifg=#4a4a59
+             highlight SpecialKey guifg=#4a4a59
+         endfun
+     augroup END
+
      augroup CleanWhitespace
          au!
          autocmd BufWritePre * :call <SID>StripTrailingWhitespace()

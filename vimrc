@@ -13,8 +13,4 @@ call SourceConfig("02-general.vim")
 call SourceConfig("03-mappings.vim")
 call SourceConfig("04-autocmds.vim")
 
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-
 unlet g:vim_files

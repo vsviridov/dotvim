@@ -12,18 +12,20 @@ if(have_plug)
     call plug#begin(vim_files . '/plugged')
 
     Plug 'tpope/vim-sensible'             " Sensible defaults for vim
-    Plug 'w0ng/vim-hybrid'                " Hybrid colorscheme
-    Plug 'vim-airline/vim-airline'        " Status bar
-    Plug 'vim-airline/vim-airline-themes' " Status bar themes
-    Plug 'ivyl/vim-bling'                 " blink search results
+
     Plug 'ctrlpvim/ctrlp.vim'             " Fuzzy search
+    Plug 'editorconfig/editorconfig-vim'  " EditorConfig.org support
+    Plug 'ivyl/vim-bling'                 " blink search results
+    Plug 'rking/ag.vim'                   " Silver Searcher Support
     Plug 'tacahiroy/ctrlp-funky'          " Fuzzy in-buffer search
     Plug 'tommcdo/vim-lion'               " Align stuff
+    Plug 'tpope/vim-commentary'           " Commenting
     Plug 'tpope/vim-fugitive'             " Work with git repos
     Plug 'tpope/vim-surround'             " Surround with quotes
-    Plug 'rking/ag.vim'                   " Silver Searcher Support
-    Plug 'tpope/vim-commentary'           " Commenting
-    " Plug 'vimwiki/vimwiki'                " http://vimwiki.github.io/
+    Plug 'vim-airline/vim-airline'        " Status bar
+    Plug 'vim-airline/vim-airline-themes' " Status bar themes
+    Plug 'vimwiki/vimwiki'                " http://vimwiki.github.io/
+    Plug 'w0ng/vim-hybrid'                " Hybrid colorscheme
 
     " Language
     if executable('rails')
@@ -36,6 +38,8 @@ if(have_plug)
 
     Plug 'quramy/vim-js-pretty-template'  " Syntax highlight inside template strings
     Plug 'quramy/tsuquyomi'               " Language server support for TypeScript
+
+    Plug 'heavenshell/vim-jsdoc'          " Generate JSDoc comments
 
     " Quality of life
     Plug 'edkolev/tmuxline.vim'
@@ -55,4 +59,10 @@ if(have_plug)
     endif
 endif
 
-
+let g:loaded_netrwPlugin = 1
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = ''
+let g:ale_sign_warning = ''

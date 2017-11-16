@@ -7,19 +7,19 @@ set visualbell
 set wildmode=full
 set background=dark
 silent! colorscheme hybrid
-let mapleader = '\' "Set <leader> before any key remapping
+" let mapleader = '\' "Set <leader> before any key remapping
 set hlsearch        "highlight search results
 set ignorecase      "ignore capitalization
 set smartcase
 set cursorline      "highlight current line
 set listchars=tab:▸\ ,eol:¬
                     "Invisible character colors
-highlight NonText guifg=#4a4a59
-highlight SpecialKey guifg=#4a4a59
+" highlight NonText guifg=#4a4a59
+" highlight SpecialKey guifg=#4a4a59
 "tab settings
-set shiftwidth=4
-set tabstop=4
 set expandtab
+set shiftwidth=4
+set softtabstop=4
 
 set backspace=2 "set sane backspace behaviour
 
@@ -44,7 +44,7 @@ imap jk <Esc>
 set completeopt=longest,menu,menuone
 
 " Stolen from maralla/dotvim
-function! EnsureExists(path)
+function! EnsureExists(path) abort
     if !isdirectory(expand(a:path))
         call mkdir(expand(a:path))
     endif
