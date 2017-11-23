@@ -5,6 +5,7 @@ inoremap <silent><leader>w <Esc>:update<cr>a
 cmap w!! w !sudo tee % >/dev/null
 
 cmap eh e %:h/
+cmap wh w %:h/
 
 "Remove search highlight when <Esc> is pressed
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
