@@ -107,8 +107,15 @@
      let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
      let g:ctrlp_use_caching = 0
  else
-     "ctrl+p ignore files in .gitignore
-     let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+     if executable("rg")
+         set grepprg=rg\ --color=never
+
+         let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+         let g:ctrlp_use_caching = 0
+     else
+         "ctrl+p ignore files in .gitignore
+         let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+     endif
  endif
 
  if has("gui_running")

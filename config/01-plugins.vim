@@ -16,7 +16,12 @@ if(have_plug)
     Plug 'ctrlpvim/ctrlp.vim'             " Fuzzy search
     Plug 'editorconfig/editorconfig-vim'  " EditorConfig.org support
     Plug 'ivyl/vim-bling'                 " blink search results
-    Plug 'rking/ag.vim'                   " Silver Searcher Support
+    if executable('ag')
+        Plug 'rking/ag.vim'               " Silver Searcher Support
+    endif
+    if executable('rg')
+        Plug 'jremmen/vim-ripgrep'        " RipGrep
+    endif
     Plug 'tacahiroy/ctrlp-funky'          " Fuzzy in-buffer search
     Plug 'tommcdo/vim-lion'               " Align stuff
     Plug 'tpope/vim-commentary'           " Commenting
