@@ -68,3 +68,59 @@ call EnsureExists('~/.vim/.cache')
 call EnsureExists(&undodir)
 call EnsureExists(&backupdir)
 call EnsureExists(&directory)
+
+ " Set up CtrlP with faster alternative, if possible
+ if executable('ag')
+     " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+     set grepprg=ag\ --nogroup\ --nocolor
+     " Use ag in CtrlP for listing files. Lightning fast, respects .gitignore
+     " and .agignore. Ignores hidden files by default.
+     let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
+     let g:ctrlp_use_caching = 0
+ else
+     if executable("rg")
+         set grepprg=rg\ --color=never
+
+         let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+         let g:ctrlp_use_caching = 0
+     else
+         "ctrl+p ignore files in .gitignore
+         let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+     endif
+ endif
+
+ if has("gui_running")
+     set go-=mTr " disable toolbar, menubar and scrollbar
+     if has("win32")
+         set guifont=Source_Code_Pro:h12:cANSI
+     endif
+     if has("osx")
+         set guifont=Source_Code_Pro:h13
+     endif
+ else
+     if(has("mouse"))
+         set mouse=a
+     endif
+     if $TERM_PROGRAM == 'iTerm.app'
+         " different cursors for insert vs normal mode
+         if exists('$TMUX')
+             let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+             let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+         else
+             let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+             let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+         endif
+     endif
+
+     " Windows-specific setting allowing for 256-colors etc
+     if($ConEmuANSI == 'ON')
+         set term=xterm
+         set t_Co=256
+         let &t_AB='\e[48;5;%dm'       " background color
+         let &t_AF='\e[38;5;%dm'       " foreground color
+         inoremap <Esc>[62~ <C-X><C-E>
+         inoremap <Esc>[63~ <C-X><C-Y>
+         nnoremap <Esc>[62~ <C-E>
+         nnoremap <Esc>[63~ <C-Y>
+     endif
+ endif

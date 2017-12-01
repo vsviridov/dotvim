@@ -25,8 +25,12 @@ noremap <leader>d :bd<cr>
 nmap <leader>e[ <Plug>(ale_previous_wrap)
 nmap <leader>e] <Plug>(ale_next_wrap)
 
-let g:tsuquyomi_javascript_support = 1
-noremap <leader>p :echo tsuquyomi#hint()<cr>
+" let g:tsuquyomi_javascript_support = 1
+" noremap <leader>p :echo tsuquyomi#hint()<cr>
+
+noremap <leader>p :LspHover<cr>
+noremap <leader>D :LspDefinition<cr>
+noremap <leader>U :LspReferences<cr>
 
 let g:ctrlp_funky_syntax_highlight = 1
 nnoremap <leader>f :CtrlPFunky<CR>

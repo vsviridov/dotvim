@@ -39,18 +39,23 @@ if(have_plug)
     Plug 'mattn/emmet-vim'                " ZenCoding
     Plug 'sheerun/vim-polyglot'           " Language Support Bundle
 
-    Plug 'sbdchd/neoformat'               " Automatic code formatting
 
-    Plug 'quramy/vim-js-pretty-template'  " Syntax highlight inside template strings
-    Plug 'quramy/tsuquyomi'               " Language server support for TypeScript
+    " Plug 'quramy/vim-js-pretty-template'" Syntax highlight inside template strings
+    " Plug 'quramy/tsuquyomi'             " Language server support for TypeScript
 
-    Plug 'heavenshell/vim-jsdoc'          " Generate JSDoc comments
+    " Plug 'heavenshell/vim-jsdoc'        " Generate JSDoc comments
 
     " Quality of life
     Plug 'edkolev/tmuxline.vim'
 
     if version >= 800
-        Plug 'w0rp/ale'
+        Plug 'w0rp/ale'                   " Asynchronous Linting
+        Plug 'sbdchd/neoformat'           " Automatic code formatting
+
+        Plug 'prabirshrestha/async.vim'   " vim8/neovim async normalizer
+        Plug 'prabirshrestha/vim-lsp'     " Language Server Protocol support
+
+        Plug 'ruanyl/coverage.vim'        " Code Coverage Support
     endif
 
     if stridx($SHELL, 'fish') >= 0
@@ -64,16 +69,23 @@ if(have_plug)
     endif
 endif
 
-let g:loaded_netrwPlugin = 1
+let g:loaded_netrwPlugin = 1              " Disable netrw
+
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#ale#enabled = 1
+
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
-
 let g:ale_fixers = {
             \ 'javascript': [ 'eslint' ],
             \ }
-
 let g:ale_fix_on_save = 1
+
+" let g:lsp_log_verbose = 1
+" let g:lsp_log_file = expand('~/vim-lsp.log')
+
+let g:coverage_json_report_path = 'coverage/coverage-final.json'
+let g:coverage_sign_covered = ''
+let g:coverage_sign_uncovered = ''
