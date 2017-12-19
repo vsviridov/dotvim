@@ -14,7 +14,7 @@ nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
 noremap <leader>l :set list!<cr>
 
 " noremap <silent> <leader>R :! echo reload \| nc -w 1 localhost 32000<cr><cr>
-noremap <silent><leader>R :! tmux send-keys -t right "up" C-m<cr><cr>
+noremap <silent><leader>R :! tmux send-keys -t top-right "up" C-m<cr><cr>
 
 "press space in normal mode to center screen
 noremap <space> zz

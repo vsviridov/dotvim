@@ -1,7 +1,9 @@
+set encoding=utf-8
+scriptencoding utf-8
+
 set shortmess=I     " turn off splash screen
 set hidden          " enable multiple dirty buffers
 set modelines=0
-set nocompatible
 set number          " show line numbers
 set visualbell
 set wildmode=full
@@ -78,7 +80,7 @@ call EnsureExists(&directory)
      let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
      let g:ctrlp_use_caching = 0
  else
-     if executable("rg")
+     if executable('rg')
          set grepprg=rg\ --color=never
 
          let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
@@ -89,19 +91,19 @@ call EnsureExists(&directory)
      endif
  endif
 
- if has("gui_running")
-     set go-=mTr " disable toolbar, menubar and scrollbar
-     if has("win32")
+ if has('gui_running')
+     set guioptions-=mTr " disable toolbar, menubar and scrollbar
+     if has('win32')
          set guifont=Source_Code_Pro:h12:cANSI
      endif
-     if has("osx")
+     if has('osx')
          set guifont=Source_Code_Pro:h13
      endif
  else
-     if(has("mouse"))
+     if(has('mouse'))
          set mouse=a
      endif
-     if $TERM_PROGRAM == 'iTerm.app'
+     if $TERM_PROGRAM ==? 'iTerm.app'
          " different cursors for insert vs normal mode
          if exists('$TMUX')
              let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
@@ -113,7 +115,7 @@ call EnsureExists(&directory)
      endif
 
      " Windows-specific setting allowing for 256-colors etc
-     if($ConEmuANSI == 'ON')
+     if($ConEmuANSI ==? 'ON')
          set term=xterm
          set t_Co=256
          let &t_AB='\e[48;5;%dm'       " background color

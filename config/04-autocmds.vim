@@ -1,4 +1,4 @@
- if has("autocmd")
+ if has('autocmd')
      filetype plugin indent on
 
      augroup InvisibleCharsHighlight
@@ -17,9 +17,9 @@
          au!
          autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
          function! <SID>StripTrailingWhitespace()
-             let pos = getpos('.')
+             let l:pos = getpos('.')
              %s/\s\+$//e
-             call setpos('.', pos)
+             call setpos('.', l:pos)
          endfun
      augroup END
 

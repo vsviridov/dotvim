@@ -1,15 +1,18 @@
-let plug_path=expand(vim_files . '/autoload/plug.vim')
-let have_plug=filereadable(plug_path)
-if(!have_plug && executable('curl'))
-    echo "Installing Plug"
+set encoding=utf-8
+scriptencoding utf-8
 
-    execute '!curl -fLo "' . plug_path . '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    execute 'source ' . plug_path
-    let have_plug = 1
+let g:plug_path=expand(g:vim_files . '/autoload/plug.vim')
+let g:have_plug=filereadable(g:plug_path)
+if(!g:have_plug && executable('curl'))
+    echo 'Installing Plug'
+
+    execute '!curl -fLo "' . g:plug_path . '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    execute 'source ' . g:plug_path
+    let g:have_plug = 1
 endif
 
-if(have_plug)
-    call plug#begin(vim_files . '/plugged')
+if(g:have_plug)
+    call plug#begin(g:vim_files . '/plugged')
 
     Plug 'tpope/vim-sensible'             " Sensible defaults for vim
 
@@ -47,8 +50,9 @@ if(have_plug)
 
     " Quality of life
     Plug 'edkolev/tmuxline.vim'
+    Plug 'jez/vim-superman'               " Man page viewer
 
-    if version >= 800
+    if v:version >= 800
         Plug 'w0rp/ale'                   " Asynchronous Linting
         Plug 'sbdchd/neoformat'           " Automatic code formatting
 
@@ -64,7 +68,7 @@ if(have_plug)
 
     call plug#end()
 
-    if empty(glob(vim_files . '/plugged'))
+    if empty(glob(g:vim_files . '/plugged'))
         PlugInstall
     endif
 endif
