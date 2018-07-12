@@ -27,12 +27,13 @@ if(g:have_plug)
     endif
     Plug 'tacahiroy/ctrlp-funky'          " Fuzzy in-buffer search
     Plug 'tommcdo/vim-lion'               " Align stuff
+    Plug 'tpope/vim-abolish'              " Case Convert and other stuff
     Plug 'tpope/vim-commentary'           " Commenting
     Plug 'tpope/vim-fugitive'             " Work with git repos
     Plug 'tpope/vim-surround'             " Surround with quotes
     Plug 'vim-airline/vim-airline'        " Status bar
     Plug 'vim-airline/vim-airline-themes' " Status bar themes
-    Plug 'vimwiki/vimwiki'                " http://vimwiki.github.io/
+    " Plug 'vimwiki/vimwiki'                " http://vimwiki.github.io/
     Plug 'w0ng/vim-hybrid'                " Hybrid colorscheme
 
     " Language
@@ -51,13 +52,23 @@ if(g:have_plug)
     " Quality of life
     Plug 'edkolev/tmuxline.vim'
     Plug 'jez/vim-superman'               " Man page viewer
+    Plug 'mhinz/vim-signify'              " Gutter signs, git, et al.
+
+    " Plug 'sotte/presenting.vim'           " Slides
 
     if v:version >= 800
         Plug 'w0rp/ale'                   " Asynchronous Linting
         Plug 'sbdchd/neoformat'           " Automatic code formatting
 
-        Plug 'prabirshrestha/async.vim'   " vim8/neovim async normalizer
-        Plug 'prabirshrestha/vim-lsp'     " Language Server Protocol support
+        Plug 'autozimu/LanguageClient-neovim', {
+            \ 'branch': 'next',
+            \ 'do': 'bash install.sh',
+            \ }                           " Lanugage Server Support
+        Plug 'junegunn/fzf'               " Multi-entry selection UI for LanguageClient
+
+        Plug 'Shougo/deoplete.nvim'       " Autocomplete Support
+        Plug 'roxma/nvim-yarp'            " nvim plugin support
+        Plug 'roxma/vim-hug-neovim-rpc'
 
         Plug 'ruanyl/coverage.vim'        " Code Coverage Support
     endif
@@ -82,14 +93,27 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
+let g:ale_linters = {
+            \ 'html': [ 'tsserver' ],
+            \ }
 let g:ale_fixers = {
             \ 'javascript': [ 'eslint' ],
             \ }
+let g:ale_linter_aliases = { 'html': ['ts'] }
 let g:ale_fix_on_save = 1
-
-" let g:lsp_log_verbose = 1
-" let g:lsp_log_file = expand('~/vim-lsp.log')
+" let g:ale_completion_enabled = 1
 
 let g:coverage_json_report_path = 'coverage/coverage-final.json'
 let g:coverage_sign_covered = ''
 let g:coverage_sign_uncovered = ''
+
+let g:signify_vcs_list = [ 'git' ]
+
+let g:LanguageClient_serverCommands = {
+      \ 'typescript': ['typescript-language-server', '--stdio'],
+      \ 'javascript': ['javascript-typescript-stdio'],
+      \ 'javascript.jsx': ['javascript-typescript-stdio'],
+      \ 'dockerfile': ['docker-langserver', '--stdio'],
+      \ }
+
+let g:deoplete#enable_at_startup = 1

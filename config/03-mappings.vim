@@ -4,8 +4,8 @@ noremap <silent><leader>w :update<cr>
 inoremap <silent><leader>w <Esc>:update<cr>a
 cmap w!! w !sudo tee % >/dev/null
 
-cmap eh e %:h/
-cmap wh w %:h/
+" cmap eh e %:h/
+" cmap wh w %:h/
 
 "Remove search highlight when <Esc> is pressed
 nnoremap <silent> <Esc><Esc> <Esc>:nohlsearch<CR><Esc>
@@ -25,13 +25,12 @@ noremap <leader>d :bd<cr>
 nmap <leader>e[ <Plug>(ale_previous_wrap)
 nmap <leader>e] <Plug>(ale_next_wrap)
 
-" let g:tsuquyomi_javascript_support = 1
-" noremap <leader>p :echo tsuquyomi#hint()<cr>
-
-noremap <leader>p :LspHover<cr>
-noremap <leader>D :LspDefinition<cr>
-noremap <leader>U :LspReferences<cr>
+nmap <leader>p <Plug>(ale_hover)
+nmap <leader>D <Plug>(ale_go_to_definition)
+nmap <leader>U <Plug>(ale_find_references)
 
 let g:ctrlp_funky_syntax_highlight = 1
 nnoremap <leader>f :CtrlPFunky<CR>
 
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <F12> :call LanguageClient_textDocument_codeAction()<CR>
