@@ -43,7 +43,7 @@ nnoremap k gk
 imap jk <Esc>
 
 " set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*,*/bower_components/*,*/jspm_packages/*
-set completeopt=longest,menu,menuone
+set completeopt=longest,menuone,preview
 
 " Stolen from maralla/dotvim
 function! EnsureExists(path) abort

@@ -35,6 +35,7 @@ if(g:have_plug)
     Plug 'vim-airline/vim-airline-themes' " Status bar themes
     " Plug 'vimwiki/vimwiki'                " http://vimwiki.github.io/
     Plug 'w0ng/vim-hybrid'                " Hybrid colorscheme
+    Plug 'christoomey/vim-sort-motion'    " Sort Motions
 
     " Language
     if executable('rails')
@@ -42,15 +43,16 @@ if(g:have_plug)
     endif
     Plug 'mattn/emmet-vim'                " ZenCoding
     Plug 'sheerun/vim-polyglot'           " Language Support Bundle
+    Plug 'ianks/vim-tsx'
 
 
-    " Plug 'quramy/vim-js-pretty-template'" Syntax highlight inside template strings
+    " Plug 'quramy/vim-js-pretty-template'  " Syntax highlight inside template strings
     " Plug 'quramy/tsuquyomi'             " Language server support for TypeScript
 
     " Plug 'heavenshell/vim-jsdoc'        " Generate JSDoc comments
 
     " Quality of life
-    Plug 'edkolev/tmuxline.vim'
+    " Plug 'edkolev/tmuxline.vim'
     Plug 'jez/vim-superman'               " Man page viewer
     Plug 'mhinz/vim-signify'              " Gutter signs, git, et al.
 
@@ -60,15 +62,8 @@ if(g:have_plug)
         Plug 'w0rp/ale'                   " Asynchronous Linting
         Plug 'sbdchd/neoformat'           " Automatic code formatting
 
-        Plug 'autozimu/LanguageClient-neovim', {
-            \ 'branch': 'next',
-            \ 'do': 'bash install.sh',
-            \ }                           " Lanugage Server Support
-        Plug 'junegunn/fzf'               " Multi-entry selection UI for LanguageClient
-
-        Plug 'Shougo/deoplete.nvim'       " Autocomplete Support
-        Plug 'roxma/nvim-yarp'            " nvim plugin support
-        Plug 'roxma/vim-hug-neovim-rpc'
+        Plug 'neoclide/coc.nvim', {'branch': 'release'}
+        Plug 'OmniSharp/omnisharp-vim'
 
         Plug 'ruanyl/coverage.vim'        " Code Coverage Support
     endif
@@ -93,15 +88,14 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
-let g:ale_linters = {
-            \ 'html': [ 'tsserver' ],
-            \ }
-let g:ale_fixers = {
-            \ 'javascript': [ 'eslint' ],
-            \ }
-let g:ale_linter_aliases = { 'html': ['ts'] }
 let g:ale_fix_on_save = 1
 " let g:ale_completion_enabled = 1
+
+let g:ale_linters = {
+            \   'typescript': ['tsserver'],
+            \   'typescript.tsx': ['tsserver'],
+            \   'cs': ['OmniSharp']
+            \}
 
 let g:coverage_json_report_path = 'coverage/coverage-final.json'
 let g:coverage_sign_covered = ''
@@ -109,11 +103,54 @@ let g:coverage_sign_uncovered = ''
 
 let g:signify_vcs_list = [ 'git' ]
 
+let g:LanguageClient_waitOutputTimeout = 1
 let g:LanguageClient_serverCommands = {
-      \ 'typescript': ['typescript-language-server', '--stdio'],
-      \ 'javascript': ['javascript-typescript-stdio'],
-      \ 'javascript.jsx': ['javascript-typescript-stdio'],
-      \ 'dockerfile': ['docker-langserver', '--stdio'],
+      \ 'typescript': ['javascript-typescript-stdio'],
+      \ 'typescript.tsx': ['javascript-typescript-stdio'],
       \ }
 
 let g:deoplete#enable_at_startup = 1
+
+let g:neoformat_nginx_nginxbeautifier = {
+    \ 'exe': 'nginxbeautifier',
+    \ 'replace': 1,
+    \ }
+
+let g:neoformat_enabled_nginx = ['nginxbeautifier']
+
+let g:OmniSharp_server_stdio = 1
+let g:OmniSharp_selector_ui = 'ctrlp'
+let g:OmniSharp_highlight_groups = {
+            \ 'csUserIdentifier': [
+            \   'constant name', 'enum member name', 'field name', 'identifier',
+            \   'local name', 'parameter name', 'property name', 'static symbol'],
+            \ 'csUserInterface': ['interface name'],
+            \ 'csUserMethod': ['extension method name', 'method name'],
+            \ 'csUserType': ['class name', 'enum name', 'namespace name', 'struct name']
+            \}
+let g:OmniSharp_highlight_types = 2
+
+sign define OmniSharpCodeActions text=💡
+augroup OSCountCodeActions
+    autocmd!
+    autocmd FileType cs set signcolumn=yes
+    autocmd CursorHold *.cs call OSCountCodeActions()
+augroup END
+
+function! OSCountCodeActions() abort
+    if bufname('%') ==# '' || OmniSharp#FugitiveCheck() | return | endif
+    if !OmniSharp#IsServerRunning() | return | endif
+    let opts = {
+                \ 'CallbackCount': function('s:CBReturnCount'),
+                \ 'CallbackCleanup': {-> execute('sign unplace 99')}
+                \}
+    call OmniSharp#CountCodeActions(opts)
+endfunction
+
+function! s:CBReturnCount(count) abort
+    if a:count
+        let l = getpos('.')[1]
+        let f = expand('%:p')
+        execute ':sign place 99 line='.l.' name=OmniSharpCodeActions file='.f
+    endif
+endfunction

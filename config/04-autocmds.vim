@@ -53,15 +53,40 @@
          au!
          autocmd FileType javascript set ai sw=2 sts=2 et
 
-         let g:neoformat_javascript_prettier = {
-                     \ 'exe' : 'prettier',
-                     \ 'args': ['--stdin', '--trailing-comma=es5', '--single-quote'],
-                     \ 'stdin': 1
-                     \ }
+         " let g:neoformat_javascript_prettier = {
+         "             \ 'exe' : 'prettier',
+         "             \ 'args': ['--stdin', '--trailing-comma=es5', '--single-quote'],
+         "             \ 'stdin': 1
+         "             \ }
+     augroup END
+
+     augroup typescript
+         au!
+
+         " call jspretmpl#register_tag('psql', 'pgsql')
+
+         " autocmd FileType typescript JsPreTmpl pgsql
+
      augroup END
 
      augroup Dockerfile
          au!
          au BufNewFile,BufRead *.dockerfile   setf dockerfile
+     augroup END
+
+     augroup Svelte
+       au!
+       au BufNewFile,BufRead *.svelte setf html.svelte
+
+     augroup END
+
+     augroup Omnisharp
+         au!
+         autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+
+         autocmd FileType cs nnoremap <buffer> <leader>D :OmniSharpGotoDefinition<CR>
+         autocmd FileType cs nnoremap <buffer> <Leader>cc :OmniSharpGlobalCodeCheck<CR>
+         autocmd FileType cs nnoremap <F12> :OmniSharpGetCodeActions<CR>
+
      augroup END
  endif

@@ -29,8 +29,10 @@ nmap <leader>p <Plug>(ale_hover)
 nmap <leader>D <Plug>(ale_go_to_definition)
 nmap <leader>U <Plug>(ale_find_references)
 
-let g:ctrlp_funky_syntax_highlight = 1
-nnoremap <leader>f :CtrlPFunky<CR>
+" let g:ctrlp_funky_syntax_highlight = 1
+" nnoremap <leader>f :CtrlPFunky<CR>
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <F12> :call LanguageClient_textDocument_codeAction()<CR>
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" nnoremap <F12> :call LanguageClient_textDocument_codeAction()<CR>
+" nmap <leader>D :call LanguageClient_textDocument_definition()<CR>
+" nmap <leader>p :call LanguageClient_textDocument_hover()<CR>
