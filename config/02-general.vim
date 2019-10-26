@@ -1,12 +1,13 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-set shortmess=I     " turn off splash screen
+set shortmess=It     " turn off splash screen, truncate status on buffer ops
 set hidden          " enable multiple dirty buffers
 set modelines=0
 set number          " show line numbers
 set visualbell
-set wildmode=full
+set wildmenu
+set wildmode=longest,list
 set background=dark
 silent! colorscheme hybrid
 " let mapleader = '\' "Set <leader> before any key remapping

@@ -18,14 +18,14 @@ if(g:have_plug)
 
     Plug 'ctrlpvim/ctrlp.vim'             " Fuzzy search
     Plug 'editorconfig/editorconfig-vim'  " EditorConfig.org support
-    Plug 'ivyl/vim-bling'                 " blink search results
+    " Plug 'ivyl/vim-bling'                 " blink search results
     if executable('ag')
         Plug 'rking/ag.vim'               " Silver Searcher Support
     endif
     if executable('rg')
         Plug 'jremmen/vim-ripgrep'        " RipGrep
     endif
-    Plug 'tacahiroy/ctrlp-funky'          " Fuzzy in-buffer search
+    " Plug 'tacahiroy/ctrlp-funky'          " Fuzzy in-buffer search
     Plug 'tommcdo/vim-lion'               " Align stuff
     Plug 'tpope/vim-abolish'              " Case Convert and other stuff
     Plug 'tpope/vim-commentary'           " Commenting
@@ -44,17 +44,16 @@ if(g:have_plug)
     Plug 'mattn/emmet-vim'                " ZenCoding
     Plug 'sheerun/vim-polyglot'           " Language Support Bundle
     Plug 'ianks/vim-tsx'
+    Plug 'OrangeT/vim-csharp'             " C# Support
 
 
     " Plug 'quramy/vim-js-pretty-template'  " Syntax highlight inside template strings
-    " Plug 'quramy/tsuquyomi'             " Language server support for TypeScript
-
     " Plug 'heavenshell/vim-jsdoc'        " Generate JSDoc comments
 
     " Quality of life
     " Plug 'edkolev/tmuxline.vim'
-    Plug 'jez/vim-superman'               " Man page viewer
-    Plug 'mhinz/vim-signify'              " Gutter signs, git, et al.
+    " Plug 'jez/vim-superman'               " Man page viewer
+    " Plug 'mhinz/vim-signify'              " Gutter signs, git, et al.
 
     " Plug 'sotte/presenting.vim'           " Slides
 
@@ -63,9 +62,10 @@ if(g:have_plug)
         Plug 'sbdchd/neoformat'           " Automatic code formatting
 
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
-        Plug 'OmniSharp/omnisharp-vim'
-
+        Plug 'Shougo/deoplete.nvim'       " Autocomplete Support
         Plug 'ruanyl/coverage.vim'        " Code Coverage Support
+        Plug 'liuchengxu/vista.vim'       " LSP Tagbar
+        Plug 'OmniSharp/omnisharp-vim'    " .Net completion
     endif
 
     if stridx($SHELL, 'fish') >= 0
@@ -75,7 +75,7 @@ if(g:have_plug)
     call plug#end()
 
     if empty(glob(g:vim_files . '/plugged'))
-        PlugInstall
+        PlugInstall --sync
     endif
 endif
 
@@ -83,7 +83,10 @@ let g:loaded_netrwPlugin = 1              " Disable netrw
 
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#ale#enabled = 1
+" let g:airline#extensions#ale#enabled = 0
+" let g:airline#extensions#coc#enabled = 1
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = ''
@@ -103,13 +106,14 @@ let g:coverage_sign_uncovered = ''
 
 let g:signify_vcs_list = [ 'git' ]
 
-let g:LanguageClient_waitOutputTimeout = 1
-let g:LanguageClient_serverCommands = {
-      \ 'typescript': ['javascript-typescript-stdio'],
-      \ 'typescript.tsx': ['javascript-typescript-stdio'],
-      \ }
+let g:neoformat_html_prettier = {
+            \ 'exe': 'prettier',
+      \ 'typescript': ['typescript-language-server', '--stdio'],
+      \ 'javascript': ['javascript-typescript-stdio'],
+      \ 'javascript.jsx': ['javascript-typescript-stdio'],
+            \ }
 
-let g:deoplete#enable_at_startup = 1
+let g:neoformat_enabled_html = ['prettier']
 
 let g:neoformat_nginx_nginxbeautifier = {
     \ 'exe': 'nginxbeautifier',

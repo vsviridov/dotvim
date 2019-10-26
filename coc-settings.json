@@ -1,0 +1,6 @@
+{
+    "coc.preferences.previewAutoClose": false,
+    "coc.preferences.hoverTarget": "echo",
+    "tsserver.log": "off",
+    "tsserver.trace.server":"off"
+}

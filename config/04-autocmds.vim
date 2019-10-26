@@ -13,15 +13,17 @@
          endfun
      augroup END
 
-     augroup CleanWhitespace
-         au!
-         autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
-         function! <SID>StripTrailingWhitespace()
-             let l:pos = getpos('.')
-             %s/\s\+$//e
-             call setpos('.', l:pos)
-         endfun
-     augroup END
+     " augroup CleanWhitespace
+     "     au!
+     "     autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
+     "     function! <SID>StripTrailingWhitespace()
+     "         let l:pos = getpos('.')
+     "         let l:_s=@/
+     "         %s/\s\+$//e
+     "         call setpos('.', l:pos)
+     "         let @/=l:_s
+     "     endfun
+     " augroup END
 
      augroup InsertTimer
          au!
@@ -74,10 +76,18 @@
          au BufNewFile,BufRead *.dockerfile   setf dockerfile
      augroup END
 
-     augroup Svelte
-       au!
-       au BufNewFile,BufRead *.svelte setf html.svelte
+     augroup suffixes
+         autocmd!
 
+         let associations = [
+            \["typescript", ".ts"],
+            \["typescript", "/index.ts"],
+            \["javascript", ".js"]
+            \]
+
+        for ft in associations
+            execute "autocmd FileType " . ft[0] . " setlocal suffixesadd=" . ft[1]
+        endfor
      augroup END
 
      augroup Omnisharp
@@ -89,4 +99,9 @@
          autocmd FileType cs nnoremap <F12> :OmniSharpGetCodeActions<CR>
 
      augroup END
+     
+     augroup Signs
+         autocmd BufEnter * sign define dummy
+         autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
+     augroup end
  endif
