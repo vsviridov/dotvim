@@ -1,7 +1,7 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-set shortmess=It     " turn off splash screen, truncate status on buffer ops
+set shortmess=It    " turn off splash screen, truncate status on buffer ops
 set hidden          " enable multiple dirty buffers
 set modelines=0
 set number          " show line numbers
@@ -11,15 +11,15 @@ set wildmode=longest,list
 set background=dark
 silent! colorscheme hybrid
 " let mapleader = '\' "Set <leader> before any key remapping
-set hlsearch        "highlight search results
-set ignorecase      "ignore capitalization
+set hlsearch          "highlight search results
+set ignorecase        "ignore capitalization
 set smartcase
-set cursorline      "highlight current line
+set cursorline        "highlight current line
 set listchars=tab:▸\ ,eol:¬
-                    "Invisible character colors
+" Invisible character colors
 " highlight NonText guifg=#4a4a59
 " highlight SpecialKey guifg=#4a4a59
-"tab settings
+" tab settings
 set expandtab
 set shiftwidth=4
 set softtabstop=4

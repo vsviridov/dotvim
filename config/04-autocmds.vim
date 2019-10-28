@@ -13,18 +13,6 @@
          endfun
      augroup END
 
-     " augroup CleanWhitespace
-     "     au!
-     "     autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
-     "     function! <SID>StripTrailingWhitespace()
-     "         let l:pos = getpos('.')
-     "         let l:_s=@/
-     "         %s/\s\+$//e
-     "         call setpos('.', l:pos)
-     "         let @/=l:_s
-     "     endfun
-     " augroup END
-
      augroup InsertTimer
          au!
          "Autoexit to normal mode after 15 seconds of inactivity
@@ -55,20 +43,10 @@
          au!
          autocmd FileType javascript set ai sw=2 sts=2 et
 
-         " let g:neoformat_javascript_prettier = {
-         "             \ 'exe' : 'prettier',
-         "             \ 'args': ['--stdin', '--trailing-comma=es5', '--single-quote'],
-         "             \ 'stdin': 1
-         "             \ }
      augroup END
 
      augroup typescript
          au!
-
-         " call jspretmpl#register_tag('psql', 'pgsql')
-
-         " autocmd FileType typescript JsPreTmpl pgsql
-
      augroup END
 
      augroup Dockerfile
@@ -79,15 +57,18 @@
      augroup suffixes
          autocmd!
 
-         let associations = [
-            \["typescript", ".ts"],
-            \["typescript", "/index.ts"],
-            \["javascript", ".js"]
+         let g:associations = [
+            \['typescript', '.ts'],
+            \['typescript', '/index.ts'],
+            \['javascript', '.js']
             \]
 
-        for ft in associations
-            execute "autocmd FileType " . ft[0] . " setlocal suffixesadd=" . ft[1]
+        for g:ft in g:associations
+            execute 'autocmd FileType ' . g:ft[0] . ' setlocal suffixesadd=' . g:ft[1]
         endfor
+
+        unlet g:associations
+        unlet g:ft
      augroup END
 
      augroup Omnisharp

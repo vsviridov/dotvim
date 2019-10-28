@@ -4,9 +4,6 @@ noremap <silent><leader>w :update<cr>
 inoremap <silent><leader>w <Esc>:update<cr>a
 cmap w!! w !sudo tee % >/dev/null
 
-" cmap eh e %:h/
-" cmap wh w %:h/
-" cmap %% %:h<tab>
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:p:h') . '/' : '%%'
 cnoremap <expr> %b getcmdtype() == ':' ? expand('%:p:r') : '%b'
 
@@ -24,25 +21,6 @@ noremap <space> zz
 noremap <leader>] :bn<cr>
 noremap <leader>[ :bp<cr>
 noremap <leader>d :bd<cr>
-
-" if exists('g:loaded_ale')
-    " nmap <leader>e[ <Plug>(ale_previous_wrap)
-    " nmap <leader>e] <Plug>(ale_next_wrap)
-
-    " nmap <leader>p <Plug>(ale_hover)
-    " nmap <leader>D <Plug>(ale_go_to_definition)
-    " nmap <leader>U <Plug>(ale_find_references)
-" endif
-
-" if exists('g:loaded_ctrlp_funky')
-    " let g:ctrlp_funky_syntax_highlight = 1
-    " nnoremap <leader>f :CtrlPFunky<CR>
-" endif
-
-" if exists('g:LanguageClient_loaded')
-    " nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-    " nnoremap <F12> :call LanguageClient_textDocument_codeAction()<CR>
-" endif
 
 " coc.nvim
 function! s:check_back_space() abort
