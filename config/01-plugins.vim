@@ -1,18 +1,19 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let g:plug_path=expand(g:vim_files . '/autoload/plug.vim')
-let g:have_plug=filereadable(g:plug_path)
+let s:plug_path=expand($MYVIM . '/autoload/plug.vim')
+let g:have_plug=filereadable(s:plug_path)
 if(!g:have_plug && executable('curl'))
     echo 'Installing Plug'
 
-    execute '!curl -fLo "' . g:plug_path . '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-    execute 'source ' . g:plug_path
+    execute '!curl -fLo "' . s:plug_path . '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    execute 'source ' . s:plug_path
     let g:have_plug = 1
 endif
 
 if(g:have_plug)
-    call plug#begin(g:vim_files . '/plugged')
+    let s:plugged=resolve($MYVIM . '/.cache/plugged')
+    call plug#begin(s:plugged)
 
     Plug 'tpope/vim-sensible'             " Sensible defaults for vim
 
@@ -60,7 +61,7 @@ if(g:have_plug)
 
     call plug#end()
 
-    if empty(glob(g:vim_files . '/plugged'))
+    if empty(glob(s:plugged))
         PlugInstall --sync
     endif
 endif
@@ -69,19 +70,10 @@ let g:loaded_netrwPlugin = 1              " Disable netrw
 
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
-let g:ale_fix_on_save = 1
-
-let g:ale_linters = {
-            \   'typescript': ['tsserver'],
-            \   'typescript.tsx': ['tsserver'],
-            \   'cs': ['OmniSharp']
-            \}
 
 let g:coverage_json_report_path = 'coverage/coverage-final.json'
 let g:coverage_sign_covered = ''
@@ -89,20 +81,7 @@ let g:coverage_sign_uncovered = ''
 
 let g:signify_vcs_list = [ 'git' ]
 
-let g:neoformat_html_prettier = {
-            \ 'exe': 'prettier',
-            \ 'typescript': ['typescript-language-server', '--stdio'],
-            \ 'javascript': ['javascript-typescript-stdio'],
-            \ 'javascript.jsx': ['javascript-typescript-stdio'],
-            \ }
-
 let g:neoformat_enabled_html = ['prettier']
-
-let g:neoformat_nginx_nginxbeautifier = {
-            \ 'exe': 'nginxbeautifier',
-            \ 'replace': 1,
-            \ }
-
 let g:neoformat_enabled_nginx = ['nginxbeautifier']
 
 let g:OmniSharp_server_stdio = 1
