@@ -2,16 +2,16 @@ set encoding=utf-8
 scriptencoding utf-8
 
 let s:plug_path=expand($MYVIM . '/autoload/plug.vim')
-let g:have_plug=filereadable(s:plug_path)
-if(!g:have_plug && executable('curl'))
+let s:have_plug=filereadable(s:plug_path)
+if(!s:have_plug && executable('curl'))
     echo 'Installing Plug'
 
     execute '!curl -fLo "' . s:plug_path . '" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     execute 'source ' . s:plug_path
-    let g:have_plug = 1
+    let s:have_plug = 1
 endif
 
-if(g:have_plug)
+if(s:have_plug)
     let s:plugged=resolve($MYVIM . '/.cache/plugged')
     call plug#begin(s:plugged)
 
@@ -39,10 +39,9 @@ if(g:have_plug)
     Plug 'mattn/emmet-vim'                " ZenCoding
     Plug 'sheerun/vim-polyglot'           " Language Support Bundle
     Plug 'ianks/vim-tsx'
-    Plug 'OrangeT/vim-csharp'             " C# Support
+    " Plug 'OrangeT/vim-csharp'             " C# Support
 
-
-    " Plug 'mhinz/vim-signify'              " Gutter signs, git, et al.
+    Plug 'mhinz/vim-signify'              " Gutter signs, git, et al.
     " Plug 'sotte/presenting.vim'           " Slides
 
     if v:version >= 800
@@ -51,8 +50,11 @@ if(g:have_plug)
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
         Plug 'Shougo/deoplete.nvim'       " Autocomplete Support
         Plug 'ruanyl/coverage.vim'        " Code Coverage Support
-        Plug 'liuchengxu/vista.vim'       " LSP Tagbar
+        if executable('ctags')
+            Plug 'liuchengxu/vista.vim'   " LSP Tagbar
+        endif
         Plug 'OmniSharp/omnisharp-vim'    " .Net completion
+        Plug 'nickspoons/vim-sharpenup'   " OmniSharp Helpers
     endif
 
     if stridx($SHELL, 'fish') >= 0
@@ -83,40 +85,3 @@ let g:signify_vcs_list = [ 'git' ]
 
 let g:neoformat_enabled_html = ['prettier']
 let g:neoformat_enabled_nginx = ['nginxbeautifier']
-
-let g:OmniSharp_server_stdio = 1
-let g:OmniSharp_selector_ui = 'ctrlp'
-let g:OmniSharp_highlight_groups = {
-            \ 'csUserIdentifier': [
-            \ 'constant name', 'enum member name', 'field name', 'identifier',
-            \ 'local name', 'parameter name', 'property name', 'static symbol'],
-            \ 'csUserInterface': ['interface name'],
-            \ 'csUserMethod': ['extension method name', 'method name'],
-            \ 'csUserType': ['class name', 'enum name', 'namespace name', 'struct name']
-            \}
-let g:OmniSharp_highlight_types = 2
-
-sign define OmniSharpCodeActions text=💡
-augroup OSCountCodeActions
-    autocmd!
-    autocmd FileType cs set signcolumn=yes
-    autocmd CursorHold *.cs call OSCountCodeActions()
-augroup END
-
-function! OSCountCodeActions() abort
-    if bufname('%') ==# '' || OmniSharp#FugitiveCheck() | return | endif
-    if !OmniSharp#IsServerRunning() | return | endif
-    let l:opts = {
-            \ 'CallbackCount': function('s:CBReturnCount'),
-            \ 'CallbackCleanup': {-> execute('sign unplace 99')}
-            \}
-    call OmniSharp#CountCodeActions(l:opts)
-endfunction
-
-function! s:CBReturnCount(count) abort
-    if a:count
-        let l:l = getpos('.')[1]
-        let l:f = expand('%:p')
-        execute ':sign place 99 line='.l:l.' name=OmniSharpCodeActions file='.l:f
-    endif
-endfunction

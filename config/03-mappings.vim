@@ -4,7 +4,7 @@ noremap <silent><leader>w :update<cr>
 inoremap <silent><leader>w <Esc>:update<cr>a
 cmap w!! w !sudo tee % >/dev/null
 
-cnoremap <expr> %% getcmdtype() == ':' ? expand('%:p:h') . '/' : '%%'
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:p:h') . '\' : '%%'
 cnoremap <expr> %b getcmdtype() == ':' ? expand('%:p:r') : '%b'
 
 "Remove search highlight when <Esc> is pressed
