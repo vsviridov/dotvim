@@ -1,6 +1,10 @@
 {
     "coc.preferences.previewAutoClose": false,
-    "coc.preferences.hoverTarget": "echo",
+    // "coc.preferences.hoverTarget": "echo",
     "tsserver.log": "off",
-    "tsserver.trace.server":"off"
+    "fsharp.log": "off",
+    "tsserver.trace.server":"off",
+    "elixirLS.dialyzerEnabled": false,
+    "coc.preferences.extensionUpdateCheck": "daily",
+    "diagnostic.displayByAle": true,
 }

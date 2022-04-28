@@ -17,6 +17,9 @@ if(s:have_plug)
 
     Plug 'tpope/vim-sensible'             " Sensible defaults for vim
 
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+
     Plug 'ctrlpvim/ctrlp.vim'             " Fuzzy search
     Plug 'editorconfig/editorconfig-vim'  " EditorConfig.org support
     if executable('ag')
@@ -45,7 +48,7 @@ if(s:have_plug)
     " Plug 'sotte/presenting.vim'           " Slides
 
     if v:version >= 800
-        Plug 'w0rp/ale'                   " Asynchronous Linting
+        Plug 'dense-analysis/ale'         " Asynchronous Linting
         Plug 'sbdchd/neoformat'           " Automatic code formatting
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
         Plug 'Shougo/deoplete.nvim'       " Autocomplete Support
@@ -72,10 +75,17 @@ let g:loaded_netrwPlugin = 1              " Disable netrw
 
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
+let g:ale_linters_explicit = 1
+let g:ale_javascript_eslint_executable = 'eslint_d'
+let g:ale_javascript_eslint_use_global = 1
+let g:ale_disable_lsp = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
 
 let g:coverage_json_report_path = 'coverage/coverage-final.json'
 let g:coverage_sign_covered = ''
@@ -85,3 +95,5 @@ let g:signify_vcs_list = [ 'git' ]
 
 let g:neoformat_enabled_html = ['prettier']
 let g:neoformat_enabled_nginx = ['nginxbeautifier']
+
+" let g:coc_node_path = '/usr/bin/node'
