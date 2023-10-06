@@ -22,12 +22,6 @@ if(s:have_plug)
 
     Plug 'ctrlpvim/ctrlp.vim'             " Fuzzy search
     Plug 'editorconfig/editorconfig-vim'  " EditorConfig.org support
-    if executable('ag')
-        Plug 'rking/ag.vim'               " Silver Searcher Support
-    endif
-    if executable('rg')
-        Plug 'jremmen/vim-ripgrep'        " RipGrep
-    endif
     Plug 'tommcdo/vim-lion'               " Align stuff
     Plug 'tpope/vim-abolish'              " Case Convert and other stuff
     Plug 'tpope/vim-commentary'           " Commenting
@@ -37,12 +31,13 @@ if(s:have_plug)
     Plug 'vim-airline/vim-airline-themes' " Status bar themes
     Plug 'w0ng/vim-hybrid'                " Hybrid colorscheme
     Plug 'christoomey/vim-sort-motion'    " Sort Motions
+    " if executable('rg')
+    "     Plug 'jremmen/vim-ripgrep'        " RipGrep
+    " endif
 
     " Language
     Plug 'mattn/emmet-vim'                " ZenCoding
     Plug 'sheerun/vim-polyglot'           " Language Support Bundle
-    Plug 'ianks/vim-tsx'
-    " Plug 'OrangeT/vim-csharp'             " C# Support
 
     Plug 'mhinz/vim-signify'              " Gutter signs, git, et al.
     " Plug 'sotte/presenting.vim'           " Slides
@@ -52,22 +47,18 @@ if(s:have_plug)
         Plug 'sbdchd/neoformat'           " Automatic code formatting
         Plug 'neoclide/coc.nvim', {'branch': 'release'}
         Plug 'Shougo/deoplete.nvim'       " Autocomplete Support
-        Plug 'ruanyl/coverage.vim'        " Code Coverage Support
+        " Plug 'ruanyl/coverage.vim'        " Code Coverage Support
         if executable('ctags')
             Plug 'liuchengxu/vista.vim'   " LSP Tagbar
         endif
-        Plug 'OmniSharp/omnisharp-vim'    " .Net completion
-        Plug 'nickspoons/vim-sharpenup'   " OmniSharp Helpers
-    endif
-
-    if stridx($SHELL, 'fish') >= 0
-        Plug 'dag/vim-fish'               " Fish Shell Support
+        " Plug 'OmniSharp/omnisharp-vim'    " .Net completion
+        " Plug 'nickspoons/vim-sharpenup'   " OmniSharp Helpers
     endif
 
     call plug#end()
 
     if empty(glob(s:plugged))
-        PlugInstall --sync
+        PlugInstall
     endif
 endif
 
@@ -81,8 +72,8 @@ let g:ale_sign_column_always = 1
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
 let g:ale_linters_explicit = 1
-let g:ale_javascript_eslint_executable = 'eslint_d'
-let g:ale_javascript_eslint_use_global = 1
+" let g:ale_javascript_eslint_executable = 'eslint_d'
+" let g:ale_javascript_eslint_use_global = 1
 let g:ale_disable_lsp = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0

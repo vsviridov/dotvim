@@ -21,8 +21,8 @@ set listchars=tab:▸\ ,eol:¬
 " highlight SpecialKey guifg=#4a4a59
 " tab settings
 set expandtab
-set shiftwidth=4
-set softtabstop=4
+set shiftwidth=2
+set softtabstop=2
 
 set backspace=2 "set sane backspace behaviour
 
@@ -45,3 +45,5 @@ imap jk <Esc>
 
 " set wildignore+=*/Deploy/*,*/node_modules/*,*/build/*,*/lib/*,*/bower_components/*,*/jspm_packages/*
 set completeopt=longest,menuone,preview
+set redrawtime=0
+set regexpengine=2

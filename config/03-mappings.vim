@@ -32,14 +32,20 @@ function! s:show_documentation()
     if &filetype ==# 'vim'
         execute 'h '.expand('<cword>')
     else
-        call CocAction('doHover')
+        call CocActionAsync('doHover')
     endif
 endfunction
 
 inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#pum#visible() ? coc#pum#next(1) :
+            \ <SID>check_back_space() ? "\<Tab>" :
             \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+
 
 nmap <silent> <leader>T <Plug>(coc-type-definition)
 nmap <silent> <leader>D <Plug>(coc-definition)
